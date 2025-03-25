@@ -5,25 +5,28 @@ link: https://docs.google.com/document/d/1DPBcyGHgflmz5RDsZQ2X8KVBPoEF5PdAz9BBNF
 
 ## Descrição do Projeto
 
-Descrever de forma geral o projeto.
+O propósito do Sistema da Bonelaria Militar será desenvolver um sistema de informação para uma confecção de artigos militares, no qual será possível cadastrar os produtos fabricados, cadastrar as costureiras, além de cadastrar as saídas/entradas, cada costureira cadastrada receberá notificações de quando determinada matéria prima sair da fábrica para a sua residência, onde será confeccionado o produto (bonés, chapéus, calções entre outros), e a mesma vai poder confirmar que o produto foi recebido. Em cada costureira registrada, terá o relatório da quantidade de produtos já feitos, juntamente com os preços individuais de cada, no qual no final vai poder ser contabilizado o quanto foi o lucro de cada costureira individualmente de acordo com os produtos fabricados, dessa forma, será possível calcular o salário de forma prática além de trazer informações úteis para análise de dados sobre a produção de cada uma.
 
 ## Equipe e Definição de Papéis
 
 Membro     |     Papel   |   E-mail   |
 ---------  | ----------- | ---------- |
-Taciano    | Cliente Professor  | taciano@bsi.ufrn.br
-Sandra     | Cliente (Diretora) | sandra@ceres.ufrn.br
-Zé         | Analista, Testador | ze@silva.com
-Maria      | Gerente, Desenvolvedor | maria@silva.com
+Bruno Costa                | Testador                | bruno.costa.099@ufrn.edu.br
+Cláudio Pereira            | Analista                | claudio.pereira.710@ufrn.edu.br
+Danilo Gabriel             | Desenvolvedor Back-End  | danilo.brito.715@ufrn.edu.br
+Felipe Augusto             | Designer                | felipe.augusto.121@ufrn.edu.br
+Mateus Dantas              | Desenvolvedor Front-End | mateus.dantas.125@.ufrn.edu.br
+Joacir Dantas de Oliveira  | Cliente                 | bonelariamilitar@gmail.com
 
 ### Matriz de Competências
 
 Membro     |     Competências   |
 ---------  | ----------- |
-Taciano    | Desenvolvedor Java, Junit, Eclipse, JSP, JSF, Hibernate, Matemática, Latex, etc |
-Sandra     | Gestão, Geográfa |
-Zé         | Desenvolvedor Java, Astrofísico |
-Maria      | Gestão, Desenvolvedor Java, Pesquisadora em Engenharia de Software |
+Cláudio    | Desenvolvedor Python, C, Flutter e Web; Experiência na área de Gestão de processos |
+Bruno      | Gestão, Geográfa |
+Felipe     | Desenvolvedor Python, C, Dart, Flutter, Web. Experiência em Modelagem de Processos. |
+Danilo     | Desenvolvedor Python, C, Flutter, Web. |
+Mateus     | Python para Análise de Dados, desenvolvimento em C, Flutter e Web, metodologias ágeis (Scrum). |
 
 ## Perfis dos Usuários
 
@@ -31,9 +34,8 @@ O sistema poderá ser utilizado por diversos usuários. Temos os seguintes perfi
 
 Perfil                                 | Descrição   |
 ---------                              | ----------- |
-Administrador | Este usuário realiza os cadastros base e pode realizar qualquer função.
-Docente | Este usuário pode verificar seu horário, e acessar turmas, estruturas curriculares, lista de alunos nas turmas, cadastrar enquetes e ver resultados, etc
-Discente | Este usuário pode verificar o plano de aulas (horários), demosntrar interesse em uma turma, e acessar turmas, a estrutura do curso, responder enquetes, etc.
+Dono da empresa | Ator com acesso geral ao sistema, responsável por fornecer, usar e excluir informações. Além de responsável por dar as rédeas do projeto e requisitos de sistemas, além de prover apoio aos desenvolvedores com informações que podem ajudar a concluir o projeto, tendo acesso amplo do sistema, como, cadastrar proprietário, cadastrar costureiras, enviar pedidos de confecção, cadastrar produtos para serem feitos, gerar relatórios e realizar pagamentos às funcionárias.
+Costureiras | Ator com acesso reduzido ao sistema, responsável por receber os pedidos de confecção (assim como a matéria-prima para confeccionar os produtos), confeccionar os produtos e cadastrar os dados dos produtos no sistema (tais como quantia, tamanho e modelo), além de enviar o produto final para o Dono da empresa.
 
 ## Lista de Requisitos Funcionais
 
@@ -238,9 +240,9 @@ erDiagram
 
 Requisito                                 | Descrição   |
 ---------                                 | ----------- |
-RNF001 - Deve ser acessível via navegador | Deve abrir perfeitamento no Firefox e no Chrome. |
-RNF002 - Consultas deve ser eficiente | O sistema deve executar as consultas em milessegundos |
-RNF003 - Log e histórico de acesso e funções | Deve manter um log de todos os acessos e das funções executadas pelo usuário |
+RNF001 - Interface Acessível para Idosos | O sistema deve possuir um design de interface que facilite o uso para principalmente pessoas idosas de acordo com estudos já feitos sobre essa área e também demonstrar protótipos de como ficaria até a aprovação do cliente, alterando coisas como tamanho de fonte, contraste, simplicidade de navegação, entre outros. |
+RNF002 - Ter conexão com Internet | O sistema deve ser capaz de se conectar à internet para se ter a troca de informações entre os usuários, já que o projeto visa facilitar a comunicação entre setores via web, isso inclui suporte para diferentes tipos de conexões, como Wi-Fi e dados móveis. |
+RNF003 - Necessidade de Aparelho móvel de sistema operacional Android | O sistema deve ser compatível prioritariamente ao S.O (Sistema Operacional) Android, já que é um sistema mais leve e de fácil obtenção, visando a maior facilidade em conclusão do projeto o necessário é que seja implementado em celulares Android. Além disso, o sistema deve ser otimizado para funcionar de forma eficiente em diferentes versões do Android, garantindo uma experiência consistente para todos os usuários |
 
 ## Riscos
 
@@ -248,9 +250,7 @@ Tabela com o mapeamento dos riscos do projeto, as possíveis soluções e os res
 
 Data | Risco | Prioridade | Responsável | Status | Providência/Solução |
 ------ | ------ | ------ | ------ | ------ | ------ |
-10/03/2018 | Não aprendizado das ferramentas utilizadas pelos componentes do grupo | Alta | Todos | Vigente | Reforçar estudos sobre as ferramentas e aulas com a integrante que conhece a ferramenta |
-10/03/2018 | Ausência por qualquer motivo do cliente | Média | Gerente | Vigente | Planejar o cronograma tendo em base a agenda do cliente |
-10/03/2018 | Divisão de tarefas mal sucedida | Baixa | Gerente | Vigente | Acompanhar de perto o desenvolvimento de cada membro da equipe |
-10/03/2018 | Implementação de protótipo com as tecnologias | Alto | Todos | Resolvido | Encontrar tutorial com a maioria da tecnologia e implementar um caso base do sistema |
+04/12/2024 | Não aprendizado das ferramentas utilizadas pelos componentes do grupo | Alta | Gerente | Vigente | Reforçar estudos sobre as ferramentas e aulas com a integrante que conhece a ferramenta |
+04/12/2024 | Possível falta de comunicação clara entre os colaboradores com o cliente do projeto | Média | Gerente | Vigente | Reforçar um canal claro de comunicação, como whatsapp ou outra rede social com horas marcadas para possíveis reuniões. |
 
 ### Referências
