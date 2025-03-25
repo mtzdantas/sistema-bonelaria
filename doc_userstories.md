@@ -12,44 +12,43 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 | Data       | Versão  | Descrição                          | Autor                          |
 | :--------- | :-----: | :--------------------------------: | :----------------------------- |
-| 22/06/2020 | 0.0.1   | Template e descrição do documento  | Taciano |
-| 23/06/2020 | 0.0.2   | Detalhamento do User Story US01    | Taciano |
-| ...        | ...     | ...                                | ...     |
-| 12/07/2020 | 1.0.0   | Documento completo com o detalhamento de todos os User Stories | Taciano     |
-| 30/04/2022 | 1.6.0   | Adição das informações da equipe: Analista, Desenvolvedor, Revisor e Testador. | Taciano |
+| 04/12/2024 | 0.0.1   | Documento inicial  | Cláudio Pereira Teixeira de Araújo |
 
 
-
-### User Story US01 - Manter Usuário
+### User Story US01 - Manter Funcionário
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve manter um cadastro de usuário que tem acesso ao sistema via login e senha. Um usuário tem os atributos name, id, email, username, data de nascimento, tipo de usuário, status, password, avatarURL. O email será o login e ele pode registrar-se diretamente no sistema, o avatarURL é um link para uma foto de seu perfil. Além disso o usuário poderá alterar alguns dados, como o e-mail ou a senha. O usuário administrador do sistema pode realizar as operações de adicionar, alterar, remover e listar os usuários comuns do sistema. |
+| **Descrição** | O sistema deve manter um cadastro de funcionário(Gerente, Costureira) que tem acesso ao sistema via login e senha. Um usuário tem os atributos nome, endereço, número de celular, email e senha. O email será o login e ele pode registrar-se diretamente no sistema e aguardar ativação da conta pelo proprietário. |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF01          | Cadastrar Usuário |
-| RF02          | Alterar Usuário  |
-| RF03          | Consultar Usuários        |
-| RF04          | Excluir Usuário |
-| RF05          | Vizualizar detalhes do Usuário |
+| RF01          | Cadastro da Costureira |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Essencial                           | 
-| **Estimativa**            | 8 h                                 | 
+| **Estimativa**            | 10 h                                | 
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional**     | 7 PF                                | 
-| **Analista**              | Taciano                             | 
-| **Desenvolvedor**         | Zé                                  | 
-| **Revisor**               | Maria                               | 
-| **Testador**              | Xuxa                                | 
+| **Tamanho Funcional**     | 8 PF                                | 
+| **Analista**              | Claudio (responsável por especificar/detalhar o US).| 
+| **Desenvolvedor**         | Danilo (responsável por implementar e realizar testes de unidade e testes de integração).| 
+| **Revisor**               | Felipe (responsável por avaliar a implementação e executar os testes de unidade e testes de integração).| 
+| **Testador**              | Bruno (responsável por executar os Testes de Aceitação e fazer o relatório de testes).| 
 
 
 | Testes de Aceitação (TA) |  |
 | ----------- | --------- |
 | **Código**      | **Descrição** |
-| **TA01.01** | Descrever o teste de aceitação 01 do US01 |
-| **TA01.02** | Descrever o teste de aceitação 02 do US01 |
-| **TA01.03** | Descrever o teste de aceitação 03 do US01 |
-| **TA01.04** | Descrever o teste de aceitação 04 do US01 |
+| **TA01.01** | O usuário informa, na tela Registrar, qual ocupação deseja realizar o cadastro (Gerente, Costureira), no qual o Gerente terá de ter uma chave de acesso específica para realizar o cadastro do mesmo, ao clicar em **Salvar** ele é notificado com uma mensagem de sucesso. Mensagem: *Cadastro realizado com sucesso*. |
+| **TA01.02** | O usuário informa, na tela Registrar, qual ocupação deseja realizar o cadastro (Gerente, Costureira), no qual a Costureira ao clicar em **Salvar** ele é notificado com uma mensagem de sucesso. Mensagem: *Cadastro realizado com sucesso, aguardando confirmação do Gerente*. |
+| **TA01.03** | Tentar fazer o registro com erro, exibir a mensagem de erro: **MSG001**: O campo {nomecampo} é obrigatório. **MSG001**: O campo {nomecampo} foi preenchido incorretamente. |
+| **TA01.04** | O usuário informa, na tela Login, os dados para logar corretamente, ao clicar em **Entrar** ele é notificado com uma mensagem de erro. Mensagem: Usuário não ativado, aguardando ativação do Gerente. |
+| **TA01.05** | O usuário informa, na tela Login, os dados para logar corretamente, ao clicar em **Entrar** ele é encaminhado para a tela principal do sistema. É exibida a Mensagem: Login realizado com sucesso. |
+| **TA01.06** | Tentar fazer o login com erro, exibir a mensagem de erro: **MSG002**: O campo {nomecampo} é obrigatório. **MSG002**: O campo {nomecampo} foi preenchido incorretamente. |
+| **TA01.07** | O usuário(Gerente), com acesso exclusivo à tela de alterar, informa o funcionário a ser alterado e então altera o(s) campo(s) {nomecampo} e então é exibida a mensagem: *Funcionário alterado com sucesso.* |
+| **TA01.08** | Tentar alterar com erro, exibir a mensagem de erro: **MSG003**: O campo {nomecampo} foi preenchido incorretamente. **MSG003**: O campo {nomecampo} é obrigatório. **MSG003**: Nenhuma alteração foi feita. |
+| **TA01.09** | O usuário(Gerente, Costureira), na tela de pesquisar, informa o funcionário a ser pesquisado por meio de {id, nome, email, número ou cpf} e então é exibida a tela atualizada com os funcionários correspondentes. |
+| **TA01.10** | Tentar pesquisar não existente, exibir a mensagem de erro: **MSG004**: Nenhum funcionário foi encontrado. |
+| **TA01.11** | O usuário(Gerente), com acesso exclusivo à tela de exclusão, informa o funcionário a ser excluído e então após confirmação com senha exclusiva do Gerente é exibida a mensagem: *Funcionário excluído com sucesso.* |
+| **TA01.12** | Tentar excluir com erro, exibir a mensagem de erro: **MSG005**: O campo {nomecampo} foi preenchido incorretamente. **MSG005**: O funcionário não existe. |
