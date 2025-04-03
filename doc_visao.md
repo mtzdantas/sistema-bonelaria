@@ -155,83 +155,93 @@ Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
 
 ```mermaid
 erDiagram
-    CENTRO {
-        string codigo PK
-        string nome
-        string sigla
-        string endereco
-        string site
+    ENDERECO {
+        int idEndereco PK
+        char rua
+        char bairro
+        int numero
+        char complemento
     }
+    ENDERECO ||--|{ FUNCIONARIO : "possui"
 
-
-    DEPARTAMENTO {
-        string codigo PK
-        string nome
-        string sigla
-        string endereco
+    FUNCAO {
+        int idFuncao PK
+        char nome
     }
-    DEPARTAMENTO ||--o{ CENTRO : "pertence a"
+    FUNCAO ||--|{ FUNCIONARIO : "define"
 
-    SALA {
-        string numero PK
-        string nome
-        int capacidade
-        float tamanho
-        string bloco
+    FUNCIONARIO {
+        int idFuncionario PK
+        char nome
+        int idEndereco FK
+        char cpf
+        char telefone
+        char email
+        double pisoSalarial
+        double salario
+        int idFuncao FK
     }
-    SALA ||--o{ CENTRO : "pertence a"
+    FUNCIONARIO }|--o{ PEDIDO : "realiza"
 
-    COMPONENTE {
-        string codigo PK
-        string nome
-        text ementa
-        int cargaHoraria
-        string modalidade
-        date dataCriacao
+    PEDIDO {
+        int idPedido PK
+        int idCostureira FK
+        char statusPedido
+        Date data
     }
-    COMPONENTE ||--o{ DEPARTAMENTO : "é de"
-    COMPONENTE }o--o{ COMPONENTE : "tem equivalências/requisitos"
+    PEDIDO ||--|{ PRODUTOPEDIDO : "contém"
 
-    HORARIO {
-        int id PK
-        string diaSemana
-        string turno
-        int ordem
-        time horaInicio
-        time horaFim
+    PRODUTO {
+        int idProduto PK
+        char nome
+        char categoria
+        char descricao
+        int quantidadeEstoque
     }
+    PRODUTO ||--|{ PRODUTOPEDIDO : "está em"
+    PRODUTO ||--|{ PRODUTOINSUMO : "composto por"
 
-    PROFESSOR {
-        string matricula PK
-        string nome
-        string email
-        string telefone
+    PRODUTOPEDIDO {
+        int idProdutoPedido PK
+        int idPedido FK
+        int idProduto FK
+        int quantidadeProduto
+        double valorProduto
     }
-    PROFESSOR ||--o{ DEPARTAMENTO : "pertence a"
+    
 
-    TURMA {
-        string codigo PK
+    INSUMOS {
+        int idInsumo PK
+        char nome
+        int quantidadeEstoque
+        char tipoDeInsumo
     }
-    TURMA ||--o{ COMPONENTE : "é de"
-    TURMA ||--o{ PROFESSOR : "é ministrada por"
-    TURMA ||--o{ SALA : "é realizada em"
-    TURMA ||--o{ HORARIO : "tem"
+    INSUMOS ||--|{ PRODUTOINSUMO : "utiliza"
 
-    USUARIO {
-        string email PK
-        string nome
-        string senha
+    PRODUTOINSUMO {
+        int idProdutoInsumo PK
+        int idProduto FK
+        int idInsumo FK
+        int quantiaInsumo
     }
-    USUARIO }o--o{ GRUPO : "pertence a"
+    
 
-    GRUPO {
-        string nome PK
+    PAGAMENTO {
+        int idPagamento PK
+        double valorPagamento
+        char formaPagamento
     }
-    GRUPO ||--o{ PERMISSAO : "tem"
+    PAGAMENTO ||--|{ CONTAAPAGAR : "quita"
 
-    PERMISSAO {
-        string nome PK
+    CONTAAPAGAR {
+        int idContaAPagar PK
+        int idPedido FK
+        int idPagamento FK
+        double valor
+        Date dataVencimento
+        char statusPagamento
     }
+    PEDIDO }|--|| CONTAAPAGAR : "gera"
 ```
 
 #### Descrição das Entidades
