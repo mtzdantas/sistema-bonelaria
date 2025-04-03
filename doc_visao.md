@@ -151,7 +151,209 @@ RF09.04 - Deletar Grupo        | Deleta um grupo informando o nome. | Administra
 
 ### Modelo Conceitual
 
-Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
+### Diagrama de Classes usando Mermaid
+
+```mermaid
+classDiagram
+    class Endereco {
+        - char rua
+        - char bairro
+        - int numero
+        - char complemento
+        + getRua(): char
+        + setRua(rua: char): void
+        + getBairro(): char
+        + setBairro (bairro: char): void
+        + getNumero(): int
+        + setNumero (numero: int): void
+        + getComplemento(): char
+        + setComplemento (complemento: char): void
+        + incluir(rua: char, bairro: char, numero: int, complemento: char): void
+        + consultar(endereco: Endereco): void
+        + alterar(rua: char, bairro: char, numero: int, complemento: char): void
+        + excluir(endereco: Endereco): void
+    }
+
+    class Funcionario {
+        - int id
+        - char nome
+        - Endereco endereco
+        - char cpf
+        - char telefone
+        - char email
+        - double pisoSalarial
+        - double salario
+        - Funcao funcao
+        + getId(): int
+        + setId(id: int): void
+        + getNome(): char
+        + setNome(nome: char): void
+        + getEndereco(): Endereco
+        + setEndereco(endereco: Endereco): void
+        + getCpf(): char
+        + setCpf(cpf:char): void
+        + getTelefone(): char
+        + setTelefone(telefone: char): void
+        + getEmail(): char
+        + setEmail(email: char): void
+        + getPisoSalarial(): double
+        + setPisoSalarial(pisoSalarial: double): void
+        + getSalario(): double
+        + setSalario(salario: double): void
+        + getFuncao(): Funcao
+        + setFuncao(funcao: Funcao): void
+        + adicionarFuncionario(): void
+        + editarFuncionario(id: int): void
+        + excluirFuncionario(id: int): void
+        + buscarFuncionario(id: int): Funcionario
+        + validar_cpf(cpf: char): void
+    }
+
+    class Funcao {
+        - char dono
+        - char costureira
+        - List<Funcao> lista
+        + getDono(): char
+        + setDono(dono: char): void
+        + getCostureira(): char
+        + setCostureira(costureira: char): void
+        + incluir(funcao: Funcao, lista: List<Funcao>): void
+        + consultar(dono: String, lista: List<Funcao>): Funcao
+        + alterar(funcao: Funcao, novoDono: String, novaCostureira: String): void
+        + excluir(funcao: Funcao, lista: List<Funcao>): void
+    }
+
+    class Pedido {
+        - int id
+        - Funcionario costureira
+        - char statusPedido
+        - Date data
+        + getId(): int
+        + setID(id: int): void
+        + getCostureira(): Funcionario
+        + setCostureira(costureira: Funcionario): void
+        + enviarPedido(): void
+        + confirmarRecebimentoMaterial(): void
+        + confirmarConclusaoPedido(): void
+        + gerarRelatorioPorData(data): void
+        + gerarRelatorioPorData(nome): void
+        + converterRelatorioEmPDF(): void
+    }
+
+    class ProdutoPedido {
+        - Pedido pedido
+        - Produto produtoPedido
+        - int quantidadeProduto
+        - int valorProduto
+        + consultarProduto(): Produto
+        + getProduto(): Produto
+        + setProduto(produtoPedido: Produto): void
+        + consultarQuantidadeProduto(): int
+        + getQuantidadeProduto(): int
+        + setQuantidadeProduto(quantidadeProdutoPedido: int): void
+        + consultarPedido(): Pedido
+        + getPedido(): Pedido
+        + setPedido(pedido: Pedido): void
+        + consultarValorProduto(): double
+        + getValorProduto(): double
+        + setValorProduto(valorProduto: double): void
+    }
+
+    class Produto {
+        - int idProduto
+        - char nome
+        - char categoria
+        - char descricao
+        - int quantidadeEstoque
+        + getidProduto(): int
+        + setidProduto(idProduto: int): void
+        + getNome(): char
+        + setNome(nome: char): void
+        + getCategoria(): char
+        + setCategoria(categoria: char): void
+        + getDescricao(): char
+        + setDescricao(descricao: char): void
+        + getQuantidadeEstoque(): int
+        + setQuantidadeEstoque(quantidadeEstoque: int): void
+        + cadastrar_produto(v:Produto): void
+        + consultar_produto(id: int): Produto
+        + atualizar_produto(v:Produto): void
+        + deletar_produto(v:Produto): void
+    }
+
+    class ProdutoInsumo {
+        - Produto produto
+        - Insumos insumo
+        - int quantiaInsumo
+        + getProduto(): Produto
+        + setProduto(produto: Produto): void
+        + getQuantiaInsumo(): int
+        + setQuantiaInsumo(quantidadeInsumo: int): void
+        + getInsumo(): Insumos
+        + setInsumo(insumo: Insumos): void
+    }
+
+    class Insumos {
+        - int idInsumo
+        - char nome
+        - int quantidadeEstoque
+        - char tipoDeInsumo
+        + getIdInsumo(): int
+        + setIdInsumo(idInsumo: int): void
+        + getNome(): char
+        + setNome(nome: char): void
+        + getQuantidadeEstoque(): int
+        + setQuantidadeEstoque(qtd: int): void
+        + getTipoDeInsumo(): char
+        + setTipoDeInsumo(tipo: char): void
+        + incluir(insumo: Insumo): void
+        + consultar(idInsumo: int): Insumo
+        + alterar(insumo: Insumo): void
+        + excluir(idInsumo: int): void
+    }
+
+    class ContaAPagar {
+        - pedido: Pedido
+        - pagamento: Pagamento
+        - idContaAPagar: int
+        - valor: double
+        - dataVencimento: Date
+        - statusPagamento: char
+        + getId(): int
+        + setId(IdContaAPagar: int): void
+        + getValor(): double
+        + setValor(valor: double): void
+        + getDataVencimento(): Date
+        + setDataVencimento(date: Date): void
+        + realizarPagamento(): void
+        + getPedido(): Pedido
+        + setPedido(pedido: Pedido): void
+        + getPagamento(): Pagamento
+        + setPagamento(pagamento: Pagamento): void
+        + consultarPagamento(): Pagamento
+    }
+
+    class Pagamento {
+        - valorPagamento: double
+        - formaPagamento: char
+        + gtFormaPagamento(): char
+        + setFormaPagamento(formaPagamento: char): void
+        + calcularValorPagamento(produtosPedidos: List<ProdutoPedido>): double
+        + realizarPagamento(valorPagamento: double): void
+    }
+
+
+    Endereco --> Funcionario
+    Funcao --> Funcionario
+    Funcionario --> Pedido
+    Pedido --> ProdutoPedido
+    Produto --> ProdutoPedido
+    ProdutoInsumo --> Produto
+    Insumos --> ProdutoInsumo
+    ContaAPagar --> Pedido
+    Pagamento --> ContaAPagar
+```
+### Modelo de Dados (Entidade-Relacionamento)
 
 ```mermaid
 erDiagram
@@ -242,6 +444,7 @@ erDiagram
         char statusPagamento
     }
     PEDIDO }|--|| CONTAAPAGAR : "gera"
+
 ```
 
 #### Descrição das Entidades
