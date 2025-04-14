@@ -10,26 +10,135 @@ Para a modelagem pode se usar o Astah UML ou o BrModelo. Uma ferramenta interess
 
 ```mermaid
 classDiagram
-      Animal <|-- Duck
-      Animal <|-- Fish
-      Animal <|-- Zebra
-      Animal : +int age
-      Animal : +String gender
-      Animal: +isMammal()
-      Animal: +mate()
-      class Duck{
-          +String beakColor
-          +swim()
-          +quack()
-      }
-      class Fish{
-          -int sizeInFeet
-          -canEat()
-      }
-      class Zebra{
-          +bool is_wild
-          +run()
-      }
+
+class Endereco {
+  -rua: char
+  -bairro: char
+  -numero: int
+  -complemento: char
+  +getRua(): char
+  +setRua(rua: char): void
+  +getBairro(): char
+  +setBairro(bairro: char): void
+  +getNumero(): int
+  +setNumero(numero: int): void
+  +getComplemento(): char
+  +setComplemento(complemento: char): void
+  +cadastrar(rua, bairro, numero, complemento): void
+  +consultar(endereco): Endereco
+  +alterar(...): void
+  +excluir(endereco: Endereco): void
+}
+
+class Funcionario {
+  -id: int
+  -nome: char
+  -cpf: char
+  -endereco: Endereco
+  -telefone: char
+  -email: char
+  -pis: char
+  -salario: double
+  -funcao: Funcao
+  +getId(): int
+  +getNome(): char
+  +setNome(nome: char): void
+  +getEndereco(): Endereco
+  +setEndereco(endereco: Endereco): void
+  ...
+}
+
+class Funcao {
+  -dono: char
+  -costureira: char
+  -lista: List~Funcao~
+  +getDono(): char
+  +setDono(dono: char): void
+  +getCostureira(): char
+  +setCostureira(c: char): void
+  +incluirFuncao(f: Funcao, lista: List~Funcao~): void
+  ...
+}
+
+class Pedido {
+  -id: int
+  -costureira: Funcionario
+  -statusPedido: char
+  -data: Date
+  +getId(): int
+  +getCostureira(): Funcionario
+  +setCostureira(f: Funcionario): void
+  ...
+}
+
+class Produto {
+  -idProduto: int
+  -nome: char
+  -categoria: char
+  -descricao: char
+  -quantidadeEstoque: int
+  +getIdProduto(): int
+  +setIdProduto(id: int): void
+  ...
+}
+
+class ProdutoPedido {
+  -pedido: Pedido
+  -produtoPedido: Produto
+  -quantidadeProduto: int
+  -valorProduto: int
+  +consultarProduto(p: Produto): void
+  ...
+}
+
+class ContaAPagar {
+  -pedido: Pedido
+  -pagamento: Pagamento
+  -idContaAPagar: int
+  -valor: double
+  -dataVencimento: Date
+  -statusPagamento: char
+  +getId(): int
+  ...
+}
+
+class Pagamento {
+  -valorPagamento: double
+  -formaPagamento: char
+  +setFormaPagamento(forma: char): void
+  +calcularValorPagamento(...): double
+  +realizarPagamento(valor: double): void
+}
+
+class ProdutoInsumo {
+  -produto: Produto
+  -insumo: Insumos
+  -quantiaInsumo: int
+  +getProduto(): Produto
+  +getInsumo(): Insumos
+  +getQuantia(): int
+}
+
+class Insumos {
+  -idInsumo: int
+  -nome: char
+  -quantidadeEstoque: int
+  -tipoDeInsumo: char
+  +getIdInsumo(): int
+  +getNome(): char
+  +getTipo(): char
+}
+
+Funcionario o-- Endereco
+Funcionario o-- Funcao
+Pedido o-- Funcionario
+ProdutoPedido o-- Pedido
+ProdutoPedido o-- Produto
+ContaAPagar o-- Pedido
+ContaAPagar o-- Pagamento
+ProdutoInsumo o-- Produto
+ProdutoInsumo o-- Insumos
+
 ```
 
 ### Descrição das Entidades
@@ -61,21 +170,61 @@ erDiagram
 
 ### Dicionário de Dados
 
-|   Tabela   | Laboratório |
-| ---------- | ----------- |
-| Descrição  | Armazena as informações de um laboratório acadêmico. |
-| Observação | Laboratórios acadêmicos podem ser de Ensino, Pesquisa, Extensão, P&D, etc. |
+#### Tabela: Costureira
+| Campo     | Descrição                             | Tipo de Dado | Tamanho | Restrições              |
+|-----------|---------------------------------------|--------------|---------|-------------------------|
+| id        | Identificador da costureira           | SERIAL       | —       | PK / Not Null           |
+| nome      | Nome da costureira                    | VARCHAR      | 100     | Not Null                |
+| endereco  | Endereço da costureira                | VARCHAR      | 150     | —                       |
+| celular   | Celular para contato                  | VARCHAR      | 20      | —                       |
+| email     | E-mail da costureira                  | VARCHAR      | 100     | Unique                  |
 
-|  Nome         | Descrição                        | Tipo de Dado | Tamanho | Restrições de Domínio |
-| ------------- | -------------------------------- | ------------ | ------- | --------------------- |
-| codigo        | identificador gerado pelo SGBD   | SERIAL       | ---     | PK / Identity |
-| sigla         | representação em sigla do lab    | VARCHAR      | 15      | Unique / Not Null |
-| nome          | nome do laboratório              | VARCHAR      | 150     | Not Null |
-| descricao     | detalhes sobre o laboratório     | VARCHAR      | 250     | --- |
-| endereco      | endereço e localização do lab    | VARCHAR      | 150     | --- |
-| data_criacao  | data de criação do lab           | DATE         | ---     | Not Null |
-| portaria      | portaria de criação do lab       | VARCHAR      | 50      | --- |
-| link_portaria | URL para a portaria (PDF)        | VARCHAR      | 150     | --- |
-| site          | URL para o site do laboratório   | VARCHAR      | 150     | --- |
-| e-mail        | e-mail de contato do laboratório | VARCHAR      | 150     | --- |
-| departamento  | departamento vinculado ao lab    | SERIAL       | ---     | FK / Not Null |
+#### Tabela: Proprietário
+| Campo     | Descrição                             | Tipo de Dado | Tamanho | Restrições              |
+|-----------|---------------------------------------|--------------|---------|-------------------------|
+| id        | Identificador do proprietário         | SERIAL       | —       | PK / Not Null           |
+| nome      | Nome do proprietário                  | VARCHAR      | 100     | Not Null                |
+| endereco  | Endereço do proprietário              | VARCHAR      | 150     | —                       |
+| celular   | Celular para contato                  | VARCHAR      | 20      | —                       |
+| email     | E-mail do proprietário                | VARCHAR      | 100     | Unique                  |
+
+#### Tabela: Produto
+| Campo            | Descrição                                           | Tipo de Dado | Tamanho | Restrições         |
+|------------------|-----------------------------------------------------|--------------|---------|--------------------|
+| id               | Identificador do produto                           | SERIAL       | —       | PK / Not Null      |
+| nome             | Nome do produto                                    | VARCHAR      | 100     | Not Null           |
+| material         | Tipo de material usado                             | VARCHAR      | 100     | —                  |
+| metragem_utilizada | Quantidade de material usada (cm²)               | INTEGER      | —       | >= 0               |
+| data_fabricacao  | Data de fabricação                                 | DATE         | —       | Not Null           |
+| data_retirada    | Data em que foi retirado para confecção            | DATE         | —       | —                  |
+| id_costureira    | Referência à costureira responsável                 | INTEGER      | —       | FK → costureira(id) |
+
+#### Tabela: Pedido
+| Campo          | Descrição                                           | Tipo de Dado | Tamanho | Restrições           |
+|----------------|-----------------------------------------------------|--------------|---------|----------------------|
+| id             | Identificador do pedido                            | SERIAL       | —       | PK                   |
+| id_produto     | Produto que será confeccionado                      | INTEGER      | —       | FK → produto(id)     |
+| id_costureira  | Costureira responsável pelo pedido                  | INTEGER      | —       | FK → costureira(id)  |
+| status         | Status atual do pedido (pendente, pronto)          | VARCHAR      | 20      | Default = 'pendente' |
+| estimativa_dias| Dias estimados para produção                       | INTEGER      | —       | —                    |
+| data_envio     | Data do envio da matéria-prima                     | DATE         | —       | —                    |
+
+#### Tabela: Relatório
+| Campo          | Descrição                                           | Tipo de Dado | Tamanho | Restrições         |
+|----------------|-----------------------------------------------------|--------------|---------|--------------------|
+| id             | Identificador do relatório                         | SERIAL       | —       | PK                 |
+| id_costureira  | Referência à costureira                             | INTEGER      | —       | FK → costureira(id)|
+| total_produzido| Quantidade de produtos feitos                       | INTEGER      | —       | >= 0               |
+| total_receita  | Valor total arrecadado                              | NUMERIC      | 10,2    | >= 0               |
+| data_inicio    | Período de início da produção                       | DATE         | —       | —                  |
+| data_fim       | Período de fim da produção                          | DATE         | —       | —                  |
+
+#### Tabela: Pagamento
+| Campo           | Descrição                                          | Tipo de Dado | Tamanho | Restrições              |
+|-----------------|----------------------------------------------------|--------------|---------|-------------------------|
+| id              | Identificador do pagamento                        | SERIAL       | —       | PK                      |
+| id_costureira   | Referência à costureira                            | INTEGER      | —       | FK → costureira(id)     |
+| valor_pago      | Valor pago pela produção                           | NUMERIC      | 10,2    | >= 0                    |
+| metodo_pagamento| Método de pagamento selecionado                    | VARCHAR      | 50      | —                       |
+| data_pagamento | Data da realização do pagamento                    | DATE         | —       | —                       |
+| confirmado      | Confirmação da costureira (true/false)             | BOOLEAN      | —       | Default = false         |
