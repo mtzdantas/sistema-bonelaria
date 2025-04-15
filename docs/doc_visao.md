@@ -37,115 +37,71 @@ Perfil                                 | Descrição   |
 Dono da empresa | Ator com acesso geral ao sistema, responsável por fornecer, usar e excluir informações. Além de responsável por dar as rédeas do projeto e requisitos de sistemas, além de prover apoio aos desenvolvedores com informações que podem ajudar a concluir o projeto, tendo acesso amplo do sistema, como, cadastrar proprietário, cadastrar costureiras, enviar pedidos de confecção, cadastrar produtos para serem feitos, gerar relatórios e realizar pagamentos às funcionárias.
 Costureiras | Ator com acesso reduzido ao sistema, responsável por receber os pedidos de confecção (assim como a matéria-prima para confeccionar os produtos), confeccionar os produtos e cadastrar os dados dos produtos no sistema (tais como quantia, tamanho e modelo), além de enviar o produto final para o Dono da empresa.
 
-## Lista de Requisitos Funcionais
+## Requisitos Funcionais
 
-### Entidade Centro - US01 - Manter Centro
-Um centro representa uma unidade administrativa da Universidade. Um centro tem código, nome, sigla, endereço e site.
+### Entidade Costureira - RF01 - Manter Costureira  
+Uma costureira tem: nome, endereço, número de celular e e-mail para contato.
 
-Requisito                     | Descrição   | Ator |
----------                     | ----------- | ---------- |
-RF01.01 - Inserir Centro      | Insere novo centro informando: código, nome, sigla, endereço e site. | Administrador |
-RF01.02 - Listar Centros      | Listagem dos centros utilizando filtros nos atributos: código, nome, sigla, endereço e site. | Administrador, Docente, Discente |
-RF01.03 - Atualizar Centro    | Atualiza um centro informando: nome, sigla, endereço e site. | Administrador |
-RF01.04 - Deletar Centro      | Deleta um centro informando o código. | Administrador |
-
----
-
-### Entidade Departamento - US02 - Manter Departamento
-Um departamento tem código, nome, sigla, endereço e o centro ao qual pertence.
-
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF02.01 - Inserir Departamento | Insere novo departamento informando: código, nome, sigla, endereço e centro. | Administrador |
-RF02.02 - Listar Departamentos | Listagem de departamentos utilizando filtros nos atributos: código, nome, sigla, endereço e centro. | Administrador |
-RF02.03 - Atualizar Departamento | Atualiza um departamento informando: nome, sigla, endereço e centro. | Administrador |
-RF02.04 - Deletar Departamento | Deleta um departamento informando o código. | Administrador |
+| Requisito                     | Descrição                                                                 | Ator        |
+|------------------------------|---------------------------------------------------------------------------|-------------|
+| RF01.01 - Inserir Costureira  | Insere nova costureira informando: nome, endereço, número de celular e e-mail. | Funcionário |
+| RF01.02 - Listar Costureiras  | Listagem de costureiras utilizando filtros nos atributos: nome, endereço, número de celular e e-mail. | Funcionário e Proprietário |
+| RF01.03 - Atualizar Costureira| Atualiza uma costureira informando: nome, endereço, número de celular e e-mail. | Funcionário e Proprietário |
+| RF01.04 - Deletar Costureira  | Deleta uma costureira informando o nome ou outro identificador.           | Funcionário e Proprietário |
 
 ---
 
-### Entidade Sala - US03 - Manter Sala
-Uma sala tem um número, um nome, capacidade, tamanho, bloco e o centro ao qual pertence.
+### Entidade Proprietário - RF02 - Manter Proprietário  
+O proprietário já possui um login pré-configurado no sistema e pode apenas alterar seus dados. Um proprietário tem: nome, endereço, número de celular e e-mail, e possui amplo acesso ao sistema.
 
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF03.01 - Inserir Sala         | Insere nova sala informando: número, nome, capacidade, tamanho, bloco e centro. | Administrador |
-RF03.02 - Listar Salas         | Listagem de salas utilizando filtros nos atributos: número, nome, capacidade, tamanho, bloco e centro. | Administrador |
-RF03.03 - Atualizar Sala       | Atualiza uma sala informando: nome, capacidade, tamanho, bloco e centro. | Administrador |
-RF03.04 - Deletar Sala         | Deleta uma sala informando o número. | Administrador |
+| Requisito                        | Descrição                                                                   | Ator        |
+|----------------------------------|-----------------------------------------------------------------------------|-------------|
+| RF02.01 - Visualizar Dados       | Permite ao proprietário visualizar seus próprios dados.                     | Proprietário |
+| RF02.02 - Atualizar Dados        | Permite ao proprietário atualizar seus dados: nome, endereço, número de celular e e-mail. | Proprietário |
 
 ---
 
-### Entidade Componente Curricular - RF004 - Manter Componente Curricular
-Um componente curricular é de um tipo de componente. Ele tem: código, nome, ementa, departamento, carga horária, modalidade, equivalências, requisitos com outros componentes e data de criação.
+### Entidade Produto - RF03 - Manter Produto  
+Um produto tem: nome, material, metragem do material, data de fabricação e data de retirada.
 
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF04.01 - Inserir Componente   | Insere novo componente curricular informando: código, nome, ementa, departamento, carga horária, modalidade, equivalências, requisitos e data de criação. | Administrador |
-RF04.02 - Listar Componentes   | Listagem de componentes curriculares utilizando filtros nos atributos: código, nome, ementa, departamento, carga horária, modalidade e data de criação. | Administrador |
-RF04.03 - Atualizar Componente | Atualiza um componente curricular informando: nome, ementa, departamento, carga horária, modalidade, equivalências e requisitos. | Administrador |
-RF04.04 - Deletar Componente   | Deleta um componente curricular informando o código. | Administrador |
-
----
-
-### Entidade Horário de Aula - RF005 - Manter Horário de Aula
-Um horário tem: dia da semana, turno, ordem (identificador), hora de início e hora de final.
-
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF05.01 - Inserir Horário      | Insere novo horário informando: dia da semana, turno, ordem, hora de início e hora de final. | Administrador |
-RF05.02 - Listar Horários      | Listagem de horários utilizando filtros nos atributos: dia da semana, turno, ordem, hora de início e hora de final. | Administrador |
-RF05.03 - Atualizar Horário    | Atualiza um horário informando: dia da semana, turno, ordem, hora de início e hora de final. | Administrador |
-RF05.04 - Deletar Horário      | Deleta um horário informando a ordem. | Administrador |
+| Requisito                     | Descrição                                                                                                   | Ator        |
+|------------------------------|-------------------------------------------------------------------------------------------------------------|-------------|
+| RF03.01 - Inserir Produto     | Insere novo produto informando: nome, material, metragem de material utilizado e data de fabricação.       | Proprietário |
+| RF03.02 - Listar Produtos     | Listagem de produtos utilizando filtros nos atributos: nome, material, metragem de material, data de fabricação e data de retirada. | Proprietário |
+| RF03.03 - Atualizar Produto   | Atualiza um produto informando: nome, material, metragem, data de fabricação e data de retirada.           | Proprietário |
+| RF03.04 - Deletar Produto     | Deleta um produto informando o nome ou outro identificador.                                                | Proprietário |
 
 ---
 
-### Entidade Professor - RF006 - Manter Professor
-Um professor tem: matrícula, nome, e-mail, telefone e o departamento.
+### Entidade Relatório - RF04 - Gerar Relatórios
 
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF06.01 - Inserir Professor    | Insere novo professor informando: matrícula, nome, e-mail, telefone e departamento. | Administrador |
-RF06.02 - Listar Professores   | Listagem de professores utilizando filtros nos atributos: matrícula, nome, e-mail, telefone e departamento. | Administrador |
-RF06.03 - Atualizar Professor  | Atualiza um professor informando: nome, e-mail, telefone e departamento. | Administrador |
-RF06.04 - Deletar Professor    | Deleta um professor informando a matrícula. | Administrador |
+| Requisito                     | Descrição                                                                                                      | Ator        |
+|------------------------------|----------------------------------------------------------------------------------------------------------------|-------------|
+| RF04.01 - Gerar Relatórios    | Gera relatórios detalhados com base nos produtos fabricados, informando quantidade produzida, material gasto, data de fabricação e preços. | Funcionário e Proprietário |
 
 ---
 
-### Entidade Turma - RF007 - Manter Turma
-Uma turma tem: código, professores, salas e horários. É de um componente curricular e pode ter mais de um professor, uma ou mais salas e vários horários de aulas.
+### Entidade Entrada/Saída - RF05 - Gerenciar Entradas e Saídas  
 
-Requisito                     | Descrição   | Ator                      |
----------                     | ----------- | ----------                |
-RF07.01 - Inserir Turma        | Insere nova turma informando: código, componente curricular, professores, salas e horários. | Chefes, Coordenadores |
-RF07.02 - Listar Turmas         | Listagem de turmas utilizando filtros nos atributos: código, componente curricular, professores, salas e horários. | Chefes, Coordenadores |
-RF07.03 - Atualizar Turma      | Atualiza uma turma informando: professores, salas e horários. | Chefes, Coordenadores |
-RF07.04 - Deletar Turma        | Deleta uma turma informando o código. | Chefes, Coordenadores |
+| Requisito                     | Descrição                                                                                                  | Ator        |
+|------------------------------|------------------------------------------------------------------------------------------------------------|-------------|
+| RF05.01 - Registrar Entrada/Saída | Registra entrada de materiais e saída de produtos, possibilitando o cálculo automático da comissão das costureiras com base na produção. | Proprietário |
 
 ---
 
-### Entidade Usuário - US08 - Manter Usuário
-Um usuário tem: nome, e-mail, senha e pode pertencer a um ou mais grupos.
+### Entidade PDF - RF06 - Gerar Relatórios em PDF  
 
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF08.01 - Inserir Usuário      | Insere novo usuário informando: nome, e-mail, senha e grupos. | Administrador |
-RF08.02 - Listar Usuários      | Listagem de usuários utilizando filtros nos atributos: nome, e-mail e grupos. | Administrador |
-RF08.03 - Atualizar Usuário    | Atualiza um usuário informando: nome, e-mail, senha e grupos. | Administrador |
-RF08.04 - Deletar Usuário      | Deleta um usuário informando o e-mail. | Administrador |
-RF08.05 - Login do Usuário     | Realiza login informando e-mail e senha. | Usuário |
-RF08.06 - Logout do Usuário    | Realiza logout encerrando a sessão do usuário. | Usuário |
+| Requisito                     | Descrição                                                                                                          | Ator        |
+|------------------------------|--------------------------------------------------------------------------------------------------------------------|-------------|
+| RF06.01 - Gerar PDF           | Gera arquivos PDF com base nos relatórios do sistema, possibilitando o acesso às informações fora do sistema.     | Funcionário e Proprietário |
 
 ---
 
-### Entidade Grupo - US09 - Manter Grupo
-Um grupo define permissões atribuídas a um conjunto de usuários. Ele tem: nome e permissões.
+### Entidade Pagamento - RF07 - Realizar Pagamento às Costureiras  
 
-Requisito                     | Descrição   | Ator           |
----------                     | ----------- | ----------     |
-RF09.01 - Inserir Grupo        | Insere novo grupo informando: nome e permissões. | Administrador |
-RF09.02 - Listar Grupos        | Listagem de grupos utilizando filtros nos atributos: nome e permissões. | Administrador |
-RF09.03 - Atualizar Grupo      | Atualiza um grupo informando: nome e permissões. | Administrador |
-RF09.04 - Deletar Grupo        | Deleta um grupo informando o nome. | Administrador |
+| Requisito                     | Descrição                                                                                                                                   | Ator        |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| RF07.01 - Realizar Pagamento  | Realiza pagamento às costureiras com base nas comissões calculadas, permitindo escolha de método de recebimento e confirmação no sistema. | Proprietário |
 
 ---
 
