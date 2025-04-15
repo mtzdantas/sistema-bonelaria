@@ -2,143 +2,209 @@
 
 Neste documento temos o modelo Conceitual (UML) ou de Dados (Entidade-Relacionamento). Temos também a descrição das entidades e o dicionário de dados.
 
-Para a modelagem pode se usar o Astah UML ou o BrModelo. Uma ferramenta interessante para modelos UML é a [YUML](http://yuml.me), no link temos um exemplo de [Modelo UML com YUML](yuml/monitoria-yuml.md). Atualmente é possível usar a ferramenta **Mermaid** segundo o blog do GitHub [Include diagrams in your Markdown files with Mermaid](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/). A documentação do **Mermaid** pode ser encontrada em [Mermaid in GitHub](https://mermaid-js.github.io/mermaid).
-
 ## Modelo Conceitual
 
 ### Diagrama de Classes usando Mermaid
 
 ```mermaid
 classDiagram
+    class Endereco {
+        - char rua
+        - char bairro
+        - int numero
+        - char complemento
+        + getRua(): char
+        + setRua(rua: char): void
+        + getBairro(): char
+        + setBairro (bairro: char): void
+        + getNumero(): int
+        + setNumero (numero: int): void
+        + getComplemento(): char
+        + setComplemento (complemento: char): void
+        + incluir(rua: char, bairro: char, numero: int, complemento: char): void
+        + consultar(endereco: Endereco): void
+        + alterar(rua: char, bairro: char, numero: int, complemento: char): void
+        + excluir(endereco: Endereco): void
+    }
 
-class Endereco {
-  -rua: char
-  -bairro: char
-  -numero: int
-  -complemento: char
-  +getRua(): char
-  +setRua(rua: char): void
-  +getBairro(): char
-  +setBairro(bairro: char): void
-  +getNumero(): int
-  +setNumero(numero: int): void
-  +getComplemento(): char
-  +setComplemento(complemento: char): void
-  +cadastrar(rua, bairro, numero, complemento): void
-  +consultar(endereco): Endereco
-  +alterar(...): void
-  +excluir(endereco: Endereco): void
-}
+    class Funcionario {
+        - int id
+        - char nome
+        - Endereco endereco
+        - char cpf
+        - char telefone
+        - char email
+        - double pisoSalarial
+        - double salario
+        - Funcao funcao
+        + getId(): int
+        + setId(id: int): void
+        + getNome(): char
+        + setNome(nome: char): void
+        + getEndereco(): Endereco
+        + setEndereco(endereco: Endereco): void
+        + getCpf(): char
+        + setCpf(cpf:char): void
+        + getTelefone(): char
+        + setTelefone(telefone: char): void
+        + getEmail(): char
+        + setEmail(email: char): void
+        + getPisoSalarial(): double
+        + setPisoSalarial(pisoSalarial: double): void
+        + getSalario(): double
+        + setSalario(salario: double): void
+        + getFuncao(): Funcao
+        + setFuncao(funcao: Funcao): void
+        + adicionarFuncionario(): void
+        + editarFuncionario(id: int): void
+        + excluirFuncionario(id: int): void
+        + buscarFuncionario(id: int): Funcionario
+        + validar_cpf(cpf: char): void
+    }
 
-class Funcionario {
-  -id: int
-  -nome: char
-  -cpf: char
-  -endereco: Endereco
-  -telefone: char
-  -email: char
-  -pis: char
-  -salario: double
-  -funcao: Funcao
-  +getId(): int
-  +getNome(): char
-  +setNome(nome: char): void
-  +getEndereco(): Endereco
-  +setEndereco(endereco: Endereco): void
-  ...
-}
+    class Funcao {
+        - char dono
+        - char costureira
+        - List<Funcao> lista
+        + getDono(): char
+        + setDono(dono: char): void
+        + getCostureira(): char
+        + setCostureira(costureira: char): void
+        + incluir(funcao: Funcao, lista: List<Funcao>): void
+        + consultar(dono: String, lista: List<Funcao>): Funcao
+        + alterar(funcao: Funcao, novoDono: String, novaCostureira: String): void
+        + excluir(funcao: Funcao, lista: List<Funcao>): void
+    }
 
-class Funcao {
-  -dono: char
-  -costureira: char
-  -lista: List~Funcao~
-  +getDono(): char
-  +setDono(dono: char): void
-  +getCostureira(): char
-  +setCostureira(c: char): void
-  +incluirFuncao(f: Funcao, lista: List~Funcao~): void
-  ...
-}
+    class Pedido {
+        - int id
+        - Funcionario costureira
+        - char statusPedido
+        - Date data
+        + getId(): int
+        + setID(id: int): void
+        + getCostureira(): Funcionario
+        + setCostureira(costureira: Funcionario): void
+        + enviarPedido(): void
+        + confirmarRecebimentoMaterial(): void
+        + confirmarConclusaoPedido(): void
+        + gerarRelatorioPorData(data): void
+        + gerarRelatorioPorData(nome): void
+        + converterRelatorioEmPDF(): void
+    }
 
-class Pedido {
-  -id: int
-  -costureira: Funcionario
-  -statusPedido: char
-  -data: Date
-  +getId(): int
-  +getCostureira(): Funcionario
-  +setCostureira(f: Funcionario): void
-  ...
-}
+    class ProdutoPedido {
+        - Pedido pedido
+        - Produto produtoPedido
+        - int quantidadeProduto
+        - int valorProduto
+        + consultarProduto(): Produto
+        + getProduto(): Produto
+        + setProduto(produtoPedido: Produto): void
+        + consultarQuantidadeProduto(): int
+        + getQuantidadeProduto(): int
+        + setQuantidadeProduto(quantidadeProdutoPedido: int): void
+        + consultarPedido(): Pedido
+        + getPedido(): Pedido
+        + setPedido(pedido: Pedido): void
+        + consultarValorProduto(): double
+        + getValorProduto(): double
+        + setValorProduto(valorProduto: double): void
+    }
 
-class Produto {
-  -idProduto: int
-  -nome: char
-  -categoria: char
-  -descricao: char
-  -quantidadeEstoque: int
-  +getIdProduto(): int
-  +setIdProduto(id: int): void
-  ...
-}
+    class Produto {
+        - int idProduto
+        - char nome
+        - char categoria
+        - char descricao
+        - int quantidadeEstoque
+        + getidProduto(): int
+        + setidProduto(idProduto: int): void
+        + getNome(): char
+        + setNome(nome: char): void
+        + getCategoria(): char
+        + setCategoria(categoria: char): void
+        + getDescricao(): char
+        + setDescricao(descricao: char): void
+        + getQuantidadeEstoque(): int
+        + setQuantidadeEstoque(quantidadeEstoque: int): void
+        + cadastrar_produto(v:Produto): void
+        + consultar_produto(id: int): Produto
+        + atualizar_produto(v:Produto): void
+        + deletar_produto(v:Produto): void
+    }
 
-class ProdutoPedido {
-  -pedido: Pedido
-  -produtoPedido: Produto
-  -quantidadeProduto: int
-  -valorProduto: int
-  +consultarProduto(p: Produto): void
-  ...
-}
+    class ProdutoInsumo {
+        - Produto produto
+        - Insumos insumo
+        - int quantiaInsumo
+        + getProduto(): Produto
+        + setProduto(produto: Produto): void
+        + getQuantiaInsumo(): int
+        + setQuantiaInsumo(quantidadeInsumo: int): void
+        + getInsumo(): Insumos
+        + setInsumo(insumo: Insumos): void
+    }
 
-class ContaAPagar {
-  -pedido: Pedido
-  -pagamento: Pagamento
-  -idContaAPagar: int
-  -valor: double
-  -dataVencimento: Date
-  -statusPagamento: char
-  +getId(): int
-  ...
-}
+    class Insumos {
+        - int idInsumo
+        - char nome
+        - int quantidadeEstoque
+        - char tipoDeInsumo
+        + getIdInsumo(): int
+        + setIdInsumo(idInsumo: int): void
+        + getNome(): char
+        + setNome(nome: char): void
+        + getQuantidadeEstoque(): int
+        + setQuantidadeEstoque(qtd: int): void
+        + getTipoDeInsumo(): char
+        + setTipoDeInsumo(tipo: char): void
+        + incluir(insumo: Insumo): void
+        + consultar(idInsumo: int): Insumo
+        + alterar(insumo: Insumo): void
+        + excluir(idInsumo: int): void
+    }
 
-class Pagamento {
-  -valorPagamento: double
-  -formaPagamento: char
-  +setFormaPagamento(forma: char): void
-  +calcularValorPagamento(...): double
-  +realizarPagamento(valor: double): void
-}
+    class ContaAPagar {
+        - pedido: Pedido
+        - pagamento: Pagamento
+        - idContaAPagar: int
+        - valor: double
+        - dataVencimento: Date
+        - statusPagamento: char
+        + getId(): int
+        + setId(IdContaAPagar: int): void
+        + getValor(): double
+        + setValor(valor: double): void
+        + getDataVencimento(): Date
+        + setDataVencimento(date: Date): void
+        + realizarPagamento(): void
+        + getPedido(): Pedido
+        + setPedido(pedido: Pedido): void
+        + getPagamento(): Pagamento
+        + setPagamento(pagamento: Pagamento): void
+        + consultarPagamento(): Pagamento
+    }
 
-class ProdutoInsumo {
-  -produto: Produto
-  -insumo: Insumos
-  -quantiaInsumo: int
-  +getProduto(): Produto
-  +getInsumo(): Insumos
-  +getQuantia(): int
-}
+    class Pagamento {
+        - valorPagamento: double
+        - formaPagamento: char
+        + gtFormaPagamento(): char
+        + setFormaPagamento(formaPagamento: char): void
+        + calcularValorPagamento(produtosPedidos: List<ProdutoPedido>): double
+        + realizarPagamento(valorPagamento: double): void
+    }
 
-class Insumos {
-  -idInsumo: int
-  -nome: char
-  -quantidadeEstoque: int
-  -tipoDeInsumo: char
-  +getIdInsumo(): int
-  +getNome(): char
-  +getTipo(): char
-}
 
-Funcionario o-- Endereco
-Funcionario o-- Funcao
-Pedido o-- Funcionario
-ProdutoPedido o-- Pedido
-ProdutoPedido o-- Produto
-ContaAPagar o-- Pedido
-ContaAPagar o-- Pagamento
-ProdutoInsumo o-- Produto
-ProdutoInsumo o-- Insumos
-
+    Endereco --> Funcionario
+    Funcao --> Funcionario
+    Funcionario --> Pedido
+    Pedido --> ProdutoPedido
+    Produto --> ProdutoPedido
+    ProdutoInsumo --> Produto
+    Insumos --> ProdutoInsumo
+    ContaAPagar --> Pedido
+    Pagamento --> ContaAPagar
 ```
 
 ### Descrição das Entidades
@@ -160,77 +226,212 @@ Descrição sucinta das entidades presentes no sistema.
 
 ## Modelo de Dados (Entidade-Relacionamento)
 
-Para criar modelos ER é possível usar o BrModelo e gerar uma imagem. Contudo, atualmente é possível criar modelos ER usando a ferramenta **Mermaid**, escrevendo o modelo diretamente em markdown. Acesse a documentação para escrever modelos [ER Diagram Mermaid](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram).
-
 ```mermaid
 erDiagram
-    Departamento ||--o{ Laboratorio : labs
-    Departamento ||--|{ Docente : docentes
-    Docente ||--o| Laboratorio : coordenador
-    Docente ||--o| Laboratorio : vice-coordenador
-    Laboratorio ||--o{ Membro_Docente : membros
-    Docente ||--|{ Membro_Docente : ""
-    Laboratorio ||--o{ Membro_Discente : membros
-    Membro_Discente }|--|| Discente: ""
+    ENDERECO {
+        int idEndereco PK
+        char rua
+        char bairro
+        int numero
+        char complemento
+    }
+    ENDERECO ||--|{ FUNCIONARIO : "possui"
+
+    FUNCAO {
+        int idFuncao PK
+        char nome
+    }
+    FUNCAO ||--|{ FUNCIONARIO : "define"
+
+    FUNCIONARIO {
+        int idFuncionario PK
+        char nome
+        int idEndereco FK
+        char cpf
+        char telefone
+        char email
+        double pisoSalarial
+        double salario
+        int idFuncao FK
+    }
+    FUNCIONARIO }|--o{ PEDIDO : "realiza"
+
+    PEDIDO {
+        int idPedido PK
+        int idCostureira FK
+        char statusPedido
+        Date data
+    }
+    PEDIDO ||--|{ PRODUTOPEDIDO : "contém"
+
+    PRODUTO {
+        int idProduto PK
+        char nome
+        char categoria
+        char descricao
+        int quantidadeEstoque
+    }
+    PRODUTO ||--|{ PRODUTOPEDIDO : "está em"
+    PRODUTO ||--|{ PRODUTOINSUMO : "composto por"
+
+    PRODUTOPEDIDO {
+        int idProdutoPedido PK
+        int idPedido FK
+        int idProduto FK
+        int quantidadeProduto
+        double valorProduto
+    }
+    
+
+    INSUMOS {
+        int idInsumo PK
+        char nome
+        int quantidadeEstoque
+        char tipoDeInsumo
+    }
+    INSUMOS ||--|{ PRODUTOINSUMO : "utiliza"
+
+    PRODUTOINSUMO {
+        int idProdutoInsumo PK
+        int idProduto FK
+        int idInsumo FK
+        int quantiaInsumo
+    }
+    
+
+    PAGAMENTO {
+        int idPagamento PK
+        double valorPagamento
+        char formaPagamento
+    }
+    PAGAMENTO ||--|{ CONTAAPAGAR : "quita"
+
+    CONTAAPAGAR {
+        int idContaAPagar PK
+        int idPedido FK
+        int idPagamento FK
+        double valor
+        Date dataVencimento
+        char statusPagamento
+    }
+    PEDIDO }|--|| CONTAAPAGAR : "gera"
+
 ```
 
 ### Dicionário de Dados
 
-#### Tabela: Costureira
-| Campo     | Descrição                             | Tipo de Dado | Tamanho | Restrições              |
-|-----------|---------------------------------------|--------------|---------|-------------------------|
-| id        | Identificador da costureira           | SERIAL       | —       | PK / Not Null           |
-| nome      | Nome da costureira                    | VARCHAR      | 100     | Not Null                |
-| endereco  | Endereço da costureira                | VARCHAR      | 150     | —                       |
-| celular   | Celular para contato                  | VARCHAR      | 20      | —                       |
-| email     | E-mail da costureira                  | VARCHAR      | 100     | Unique                  |
+### Tabela: ENDERECO
 
-#### Tabela: Proprietário
-| Campo     | Descrição                             | Tipo de Dado | Tamanho | Restrições              |
-|-----------|---------------------------------------|--------------|---------|-------------------------|
-| id        | Identificador do proprietário         | SERIAL       | —       | PK / Not Null           |
-| nome      | Nome do proprietário                  | VARCHAR      | 100     | Not Null                |
-| endereco  | Endereço do proprietário              | VARCHAR      | 150     | —                       |
-| celular   | Celular para contato                  | VARCHAR      | 20      | —                       |
-| email     | E-mail do proprietário                | VARCHAR      | 100     | Unique                  |
+| Campo        | Descrição                  | Tipo de Dado | Tamanho | Restrições    |
+|--------------|----------------------------|--------------|---------|----------------|
+| idEndereco   | Identificador do endereço  | SERIAL       | —       | PK / Not Null   |
+| rua          | Nome da rua                | VARCHAR      | 100     | Not Null        |
+| bairro       | Nome do bairro             | VARCHAR      | 100     | Not Null        |
+| numero       | Número da residência        | INTEGER      | —       | Not Null        |
+| complemento  | Complemento do endereço    | VARCHAR      | 100     | —               |
 
-#### Tabela: Produto
-| Campo            | Descrição                                           | Tipo de Dado | Tamanho | Restrições         |
-|------------------|-----------------------------------------------------|--------------|---------|--------------------|
-| id               | Identificador do produto                           | SERIAL       | —       | PK / Not Null      |
-| nome             | Nome do produto                                    | VARCHAR      | 100     | Not Null           |
-| material         | Tipo de material usado                             | VARCHAR      | 100     | —                  |
-| metragem_utilizada | Quantidade de material usada (cm²)               | INTEGER      | —       | >= 0               |
-| data_fabricacao  | Data de fabricação                                 | DATE         | —       | Not Null           |
-| data_retirada    | Data em que foi retirado para confecção            | DATE         | —       | —                  |
-| id_costureira    | Referência à costureira responsável                 | INTEGER      | —       | FK → costureira(id) |
+---
 
-#### Tabela: Pedido
-| Campo          | Descrição                                           | Tipo de Dado | Tamanho | Restrições           |
-|----------------|-----------------------------------------------------|--------------|---------|----------------------|
-| id             | Identificador do pedido                            | SERIAL       | —       | PK                   |
-| id_produto     | Produto que será confeccionado                      | INTEGER      | —       | FK → produto(id)     |
-| id_costureira  | Costureira responsável pelo pedido                  | INTEGER      | —       | FK → costureira(id)  |
-| status         | Status atual do pedido (pendente, pronto)          | VARCHAR      | 20      | Default = 'pendente' |
-| estimativa_dias| Dias estimados para produção                       | INTEGER      | —       | —                    |
-| data_envio     | Data do envio da matéria-prima                     | DATE         | —       | —                    |
+### Tabela: FUNCAO
 
-#### Tabela: Relatório
-| Campo          | Descrição                                           | Tipo de Dado | Tamanho | Restrições         |
-|----------------|-----------------------------------------------------|--------------|---------|--------------------|
-| id             | Identificador do relatório                         | SERIAL       | —       | PK                 |
-| id_costureira  | Referência à costureira                             | INTEGER      | —       | FK → costureira(id)|
-| total_produzido| Quantidade de produtos feitos                       | INTEGER      | —       | >= 0               |
-| total_receita  | Valor total arrecadado                              | NUMERIC      | 10,2    | >= 0               |
-| data_inicio    | Período de início da produção                       | DATE         | —       | —                  |
-| data_fim       | Período de fim da produção                          | DATE         | —       | —                  |
+| Campo      | Descrição                      | Tipo de Dado | Tamanho | Restrições    |
+|------------|--------------------------------|--------------|---------|----------------|
+| idFuncao   | Identificador da função        | SERIAL       | —       | PK / Not Null   |
+| nome       | Nome da função (ex: costureira, dono) | VARCHAR      | 50      | Not Null        |
 
-#### Tabela: Pagamento
-| Campo           | Descrição                                          | Tipo de Dado | Tamanho | Restrições              |
-|-----------------|----------------------------------------------------|--------------|---------|-------------------------|
-| id              | Identificador do pagamento                        | SERIAL       | —       | PK                      |
-| id_costureira   | Referência à costureira                            | INTEGER      | —       | FK → costureira(id)     |
-| valor_pago      | Valor pago pela produção                           | NUMERIC      | 10,2    | >= 0                    |
-| metodo_pagamento| Método de pagamento selecionado                    | VARCHAR      | 50      | —                       |
-| data_pagamento | Data da realização do pagamento                    | DATE         | —       | —                       |
-| confirmado      | Confirmação da costureira (true/false)             | BOOLEAN      | —       | Default = false         |
+---
+
+### Tabela: FUNCIONARIO
+
+| Campo         | Descrição                            | Tipo de Dado | Tamanho | Restrições              |
+|---------------|----------------------------------------|--------------|---------|--------------------------|
+| idFuncionario | Identificador do funcionário           | SERIAL       | —       | PK / Not Null             |
+| nome          | Nome completo                          | VARCHAR      | 100     | Not Null                  |
+| idEndereco    | FK para o endereço                     | INTEGER      | —       | FK → ENDERECO(idEndereco)|
+| cpf           | CPF do funcionário                     | CHAR         | 11      | Unique / Not Null         |
+| telefone      | Telefone de contato                    | VARCHAR      | 20      | —                         |
+| email         | E-mail do funcionário                  | VARCHAR      | 100     | Unique / Not Null         |
+| pisoSalarial  | Piso salarial base                     | NUMERIC      | 10,2    | Not Null / >= 0           |
+| salario       | Salário do funcionário                 | NUMERIC      | 10,2    | Not Null / >= pisoSalarial |
+| idFuncao      | FK para a função                       | INTEGER      | —       | FK → FUNCAO(idFuncao)     |
+
+---
+
+### Tabela: PEDIDO
+
+| Campo         | Descrição                            | Tipo de Dado | Tamanho | Restrições                      |
+|---------------|----------------------------------------|--------------|---------|---------------------------------|
+| idPedido      | Identificador do pedido                | SERIAL       | —       | PK / Not Null                   |
+| idCostureira  | FK para funcionário que executa o pedido | INTEGER    | —       | FK → FUNCIONARIO(idFuncionario)|
+| statusPedido  | Status do pedido (pendente, pronto...) | VARCHAR      | 20      | Default: 'pendente'            |
+| data          | Data de criação do pedido              | DATE         | —       | Not Null                        |
+
+---
+
+### Tabela: PRODUTO
+
+| Campo              | Descrição                         | Tipo de Dado | Tamanho | Restrições       |
+|--------------------|-----------------------------------|--------------|---------|------------------|
+| idProduto          | Identificador do produto          | SERIAL       | —       | PK / Not Null     |
+| nome               | Nome do produto                   | VARCHAR      | 100     | Not Null          |
+| categoria          | Categoria (boné, calça, etc.)     | VARCHAR      | 50      | Not Null          |
+| descricao          | Descrição do produto              | VARCHAR      | 250     | —                 |
+| quantidadeEstoque  | Quantidade atual no estoque       | INTEGER      | —       | Default: 0 / >= 0 |
+
+---
+
+### Tabela: PRODUTOPEDIDO
+
+| Campo             | Descrição                              | Tipo de Dado | Tamanho | Restrições                            |
+|-------------------|------------------------------------------|--------------|---------|----------------------------------------|
+| idProdutoPedido   | Identificador da relação                 | SERIAL       | —       | PK / Not Null                           |
+| idPedido          | FK para o pedido                         | INTEGER      | —       | FK → PEDIDO(idPedido)                  |
+| idProduto         | FK para o produto                        | INTEGER      | —       | FK → PRODUTO(idProduto)                |
+| quantidadeProduto | Quantidade do produto no pedido         | INTEGER      | —       | Not Null / >= 1                         |
+| valorProduto      | Valor do produto no momento do pedido   | NUMERIC      | 10,2    | Not Null / >= 0                         |
+
+---
+
+### Tabela: INSUMOS
+
+| Campo              | Descrição                          | Tipo de Dado | Tamanho | Restrições    |
+|--------------------|------------------------------------|--------------|---------|----------------|
+| idInsumo           | Identificador do insumo            | SERIAL       | —       | PK / Not Null   |
+| nome               | Nome do insumo                     | VARCHAR      | 100     | Not Null        |
+| quantidadeEstoque  | Quantidade disponível no estoque   | INTEGER      | —       | Default: 0      |
+| tipoDeInsumo       | Tipo (tecido, botão, etc.)         | VARCHAR      | 50      | Not Null        |
+
+---
+
+### Tabela: PRODUTOINSUMO
+
+| Campo           | Descrição                             | Tipo de Dado | Tamanho | Restrições                      |
+|-----------------|-----------------------------------------|--------------|---------|----------------------------------|
+| idProdutoInsumo | Identificador da relação                | SERIAL       | —       | PK / Not Null                    |
+| idProduto       | FK para produto                         | INTEGER      | —       | FK → PRODUTO(idProduto)          |
+| idInsumo        | FK para insumo                          | INTEGER      | —       | FK → INSUMOS(idInsumo)           |
+| quantiaInsumo   | Quantidade do insumo usada no produto   | INTEGER      | —       | Not Null / >= 1                  |
+
+---
+
+### Tabela: PAGAMENTO
+
+| Campo           | Descrição                             | Tipo de Dado | Tamanho | Restrições     |
+|-----------------|-----------------------------------------|--------------|---------|----------------|
+| idPagamento     | Identificador do pagamento             | SERIAL       | —       | PK / Not Null   |
+| valorPagamento  | Valor total do pagamento               | NUMERIC      | 10,2    | Not Null / >= 0 |
+| formaPagamento  | Forma de pagamento (PIX, Dinheiro...)  | VARCHAR      | 50      | Not Null        |
+
+---
+
+### Tabela: CONTAAPAGAR
+
+| Campo           | Descrição                               | Tipo de Dado | Tamanho | Restrições                        |
+|-----------------|-------------------------------------------|--------------|---------|------------------------------------|
+| idContaAPagar   | Identificador da conta                   | SERIAL       | —       | PK / Not Null                      |
+| idPedido        | Pedido associado                         | INTEGER      | —       | FK → PEDIDO(idPedido)              |
+| idPagamento     | Pagamento relacionado                    | INTEGER      | —       | FK → PAGAMENTO(idPagamento)        |
+| valor           | Valor da conta                           | NUMERIC      | 10,2    | Not Null / >= 0                    |
+| dataVencimento  | Data de vencimento da conta              | DATE         | —       | Not Null                           |
+| statusPagamento | Status do pagamento (pago, pendente...)  | VARCHAR      | 20      | Not Null                           |
+
