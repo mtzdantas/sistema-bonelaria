@@ -145,12 +145,18 @@ ProdutoInsumo o-- Insumos
 
 Descrição sucinta das entidades presentes no sistema.
 
-| Entidade | Descrição   |
-|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Animal   | Entidade abstrata para representar informações gerais dos Animais: age, gender, isMammal(), mate().                                                  |
-| Duck     | Entidade que representa um Pato tem as informações: String beakColor, +swim(), +quack(). A classe Duck estende a classe abstrata Animal. |
-| Fish     | Entidade que representa um Peixe tem as informações: sizeInFeet, -canEat(). A classe Peixe estende a classe abstrata Animal.                                                                   |
-| Zebra    | Entidade que representa um Zebra tem as informações is_wild, run(). A classe Zebra estende a classe abstrata Animal.                                                                   |
+| Entidade          | Descrição |
+|-------------------|-----------|
+| **Endereco**       | Representa o endereço de um funcionário, contendo os atributos: rua, bairro, número e complemento. Possui métodos para cadastrar, consultar, alterar e excluir dados. |
+| **Funcionario**    | Representa um funcionário da confecção. Contém informações como nome, CPF, telefone, salário, endereço e está associado a uma função. |
+| **Funcao**         | Define o tipo de função do funcionário (ex: dono, costureira). Permite operações como inclusão, alteração e exclusão de funções. |
+| **Pedido**         | Representa um pedido de produção feito por um funcionário. Armazena informações como ID, data, status e a costureira responsável. |
+| **Produto**        | Representa um produto fabricado na confecção. Contém dados como nome, descrição, categoria e quantidade disponível em estoque. |
+| **ProdutoPedido**  | Associação entre um pedido e os produtos solicitados. Armazena a quantidade e o valor de cada produto vinculado a um pedido. |
+| **ContaAPagar**    | Representa uma conta relacionada a um pedido. Contém valor da conta, status do pagamento, data de vencimento e pagamento realizado. |
+| **Pagamento**      | Representa o pagamento de uma conta. Armazena o valor e a forma de pagamento. Realiza cálculo do valor total e efetua o pagamento. |
+| **ProdutoInsumo**  | Define a relação entre um produto e os insumos necessários para sua produção, especificando a quantidade de insumos utilizada. |
+| **Insumos**        | Representa os materiais utilizados na confecção dos produtos. Contém nome, tipo e quantidade disponível no estoque. |
 
 ## Modelo de Dados (Entidade-Relacionamento)
 
