@@ -15,3 +15,4 @@ Sistema para gerenciar a produção de artigos militares, permitindo cadastro de
 - [PostgreSQL com Docker](https://www.youtube.com/watch?v=KlbL-8CEjN0)
 
 ## [Documentação](docs)
+## [Definição e Estrutura do Banco de Dados do Projeto](sistema/banco_dados/projeto01.md)
