@@ -2,6 +2,9 @@
 
 Sistema para gerenciar a produção de artigos militares, permitindo cadastro de produtos, costureiras e controle de materiais, além de automatizar o cálculo de pagamentos.
 
+# Link para markdown do projeto
+* [Projeto](sistema/projeto01.md)
+
 ## Tecnologias Utilizadas
 
 - **Frontend:** Flutter com o framework Dark (Dark/Flutter)
