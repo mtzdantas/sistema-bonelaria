@@ -4,7 +4,7 @@ Sistema para gerenciar a produção de artigos militares, permitindo cadastro de
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Frontend:** Flutter com o framework Dart (Dart/Flutter)
+- **Frontend:** Flutter (utilizando a linguagem Dart)
 - **Backend:** Supabase (plataforma Backend-as-a-Service baseada em PostgreSQL)
 - **Banco de Dados:** PostgreSQL (gerenciado pelo Supabase)
 
