@@ -5,11 +5,13 @@ link:https://docs.google.com/document/d/1i80vPaInPi5lSpI7rk4QExnO86iEmrsHBfmYRy6
 
 ## Descrição da Arquitetura do Projeto
 
-A arquitetura do Sistema da Bonelaria Militar segue um modelo cliente-servidor, com o frontend em Flutter para mobile e o backend utilizando FastAPI, conectada a um banco de dados PostgreSQL hospedado dentro de um container Docker. Essa estrutura permite uma separação clara entre a interface do usuário (mobile) e a lógica de processamento e armazenamento (backend).
+A arquitetura do Sistema da Bonelaria Militar segue um modelo cliente-servidor, com o frontend em Flutter para mobile e o backend utilizando o Supabase, que fornece autenticação, banco de dados relacional e API RESTful integrada baseada em PostgreSQL. O banco de dados é hospedado e gerenciado diretamente pelo Supabase, dispensando a necessidade de configurar containers manualmente.
+
+Essa estrutura permite uma separação clara entre a interface do usuário (mobile) e a lógica de processamento e armazenamento (backend), mantendo uma arquitetura moderna, escalável e simplificada.
 
 ## Visão Geral da Arquitetura
 
-Imagem com a organização geral dos componentes da arquitetura do projeto. Segue a **Arquitetura Geral** do Projeto utilizando **Flutter** no Front-End, e **FastAPI** com **Pydantic**, **SQLAlchemy** e **PostgreSQL** no Back-End:
+Imagem com a organização geral dos componentes da arquitetura do projeto. Segue a Arquitetura Geral do Projeto utilizando **Flutter** no Front-End, e **Supabase** com **PostgreSQL** no Back-End para gerenciamento de dados, autenticação e comunicação via API RESTful:
 
 
 ![Arquitetura Django Framework](./Front-End%20(1).png)
@@ -23,11 +25,9 @@ O **Front-End** é responsável pela interface do usuário e pela interação co
 
 ### Back-End
 
-O **Back-End** é responsável pela lógica de negócios, manipulação de dados e comunicação com o banco de dados. Usamos **FastAPI**, um framework para a construção de APIs, baseado em Python. Ele é responsável por processar as requisições do front-end e devolver os devidos retornos.
+O **Back-End** é responsável pela lógica de negócios, manipulação de dados e comunicação com o banco de dados. Utilizamos o **Supabase**, uma plataforma open-source que oferece uma alternativa ao **Firebase**, baseada no **PostgreSQ**L.
 
-Usamos o **FastAPI** em conjunto com o **Pydantic** para validação de dados e o **SQLAlchemy** para mapeamento objeto-relacional (ORM), facilitando a interação com o banco de dados.
-
-Por fim, temos o **PostgreSQL** como Banco de dados relacional para armazenar os dados do sistema, como cadastro de produtos, costureiras, e controle de materiais.
+O Supabase fornece uma API RESTful e em tempo real automaticamente gerada a partir do banco de dados **PostgreSQL**, facilitando o gerenciamento de autenticação, leitura e escrita de dados diretamente do front-end.
 
 
 ## Requisitos Não-Funcionais
