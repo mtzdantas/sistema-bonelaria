@@ -13,5 +13,7 @@ Sistema para gerenciar a produção de artigos militares, permitindo cadastro de
 - [Flutter (Dark/Flutter)](https://www.youtube.com/playlist?list=PLMdYygf53DP5H-svtc_FFhXuentwmLCFH)
 - [Supabase com Flutter](https://www.youtube.com/playlist?list=PL5S4mPUpp4OtkMf5LNDLXdTcAp1niHjoL)
 
-## [Documentação](docs)
-## [Definição e Estrutura do Banco de Dados do Projeto](sistema/banco_dados/projeto01.md)
+## Navegação
+
+- [Documentação](docs)
+- [Definição e Estrutura do Banco de Dados do Projeto](sistema/banco_dados/projeto01.md)
