@@ -5,12 +5,13 @@ Sistema para gerenciar a produção de artigos militares, permitindo cadastro de
 ## 🚀 Tecnologias Utilizadas
 
 - **Frontend:** Flutter (utilizando a linguagem Dart)
-- **Backend:** Supabase (plataforma Backend-as-a-Service baseada em PostgreSQL)
+- **Backend:** FastAPI (Python)
 - **Banco de Dados:** PostgreSQL (gerenciado pelo Supabase)
 
 ## 💻 Tutoriais das Tecnologias
 
-- [Flutter (Dart/Flutter)](https://www.youtube.com/playlist?list=PLMdYygf53DP5H-svtc_FFhXuentwmLCFH)
+- [Flutter (Dark/Flutter)](https://www.youtube.com/playlist?list=PLMdYygf53DP5H-svtc_FFhXuentwmLCFH)
+- [FastAPI](https://www.youtube.com/playlist?list=PLJHVw_wMqnI-eX95g9U_W941l_yWsIDIL)
 - [Supabase com Flutter](https://www.youtube.com/playlist?list=PL5S4mPUpp4OtkMf5LNDLXdTcAp1niHjoL)
 
 ## 📄 Navegação
