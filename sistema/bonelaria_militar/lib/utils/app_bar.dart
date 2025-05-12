@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -19,10 +20,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         TextButton.icon(
-          onPressed: () {
-            // Implementar o logout do Supabase
-            // Ver sobre: Supabase.instance.client.auth.signOut(); 
-            // Navigator.pushReplacementNamed(context, '/login');
+          onPressed: () async {
+            await Supabase.instance.client.auth.signOut();
+            Navigator.pushReplacementNamed(context, '/login');
           },
           icon: const Icon(Symbols.logout, color: Colors.white),
           label: const Text(

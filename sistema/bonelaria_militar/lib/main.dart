@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'navigation/main_nav.dart';
 import 'supabase/supabase_client.dart';
+import 'auth/views/login.dart';
+import 'screens/funcionarios/funcionarios.dart';
+import 'screens/pedidos/pedidos.dart';
+import 'screens/produtos/produtos.dart';
+import 'screens/relatorios/relatorios.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +23,14 @@ class MyApp extends StatelessWidget {
       title: 'Bonelaria Militar',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: const MainNavigation(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/funcionarios': (context) => FuncScreen(),
+        '/pedidos': (context) => PedScreen(),
+        '/produtos': (context) => ProdScreen(),
+        '/relatorios': (context) => RelScreen(),
+      },
     );
   }   
 }
