@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../supabase/supabase_client.dart';
 import '../../models/funcionario.dart';
-import '../../widgets/app_bar.dart';
+import '../../utils/app_bar.dart';
 
 class FuncScreen extends StatefulWidget {
   const FuncScreen({super.key});
