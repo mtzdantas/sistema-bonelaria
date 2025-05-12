@@ -1,4 +1,5 @@
-// lib/models/funcionario.dart
+import 'endereco.dart';
+
 class Funcionario {
   final int idFuncionario;
   final String nome;
@@ -9,6 +10,7 @@ class Funcionario {
   final double pisoSalarial;
   final double salario;
   final int idFuncao;
+  final Endereco? endereco;
 
   Funcionario({
     required this.idFuncionario,
@@ -20,9 +22,10 @@ class Funcionario {
     required this.pisoSalarial,
     required this.salario,
     required this.idFuncao,
+    this.endereco,
   });
 
-  factory Funcionario.fromMap(Map<String, dynamic> map) {
+  factory Funcionario.fromMapWithEndereco(Map<String, dynamic> map) {
     return Funcionario(
       idFuncionario: map['id_funcionario'],
       nome: map['nome'],
@@ -33,6 +36,9 @@ class Funcionario {
       pisoSalarial: (map['piso_salarial'] as num).toDouble(),
       salario: (map['salario'] as num).toDouble(),
       idFuncao: map['id_funcao'],
+      endereco: map['endereco'] != null
+          ? Endereco.fromMap(map['endereco'])
+          : null,
     );
   }
 }

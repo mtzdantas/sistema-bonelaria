@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -23,7 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             // Ver sobre: Supabase.instance.client.auth.signOut(); 
             // Navigator.pushReplacementNamed(context, '/login');
           },
-          icon: const Icon(Icons.logout, color: Colors.white),
+          icon: const Icon(Symbols.logout, color: Colors.white),
           label: const Text(
             'Sair',
             style: TextStyle(color: Colors.white),

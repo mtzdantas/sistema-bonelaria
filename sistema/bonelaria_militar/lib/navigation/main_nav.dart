@@ -3,6 +3,7 @@ import '../screens/funcionarios/funcionarios.dart';
 import '../screens/pedidos/pedidos.dart';
 import '../screens/produtos/produtos.dart';
 import '../screens/relatorios/relatorios.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -36,19 +37,19 @@ class _MainNavigationState extends State<MainNavigation> {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.people),
+            icon: Icon(Symbols.person_add),
             label: 'Funcionários',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
+            icon: Icon(Symbols.splitscreen_add),
             label: 'Pedidos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
+            icon: Icon(Symbols.outgoing_mail),
             label: 'Produtos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
+            icon: Icon(Symbols.search_insights),
             label: 'Relatórios',
           ),
         ],
