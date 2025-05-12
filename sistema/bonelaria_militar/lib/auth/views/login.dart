@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../navigation/main_nav.dart';
+import '../controllers/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,63 +9,42 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final controller = LoginController();
   bool _loading = false;
 
   Future<void> _signIn() async {
     setState(() => _loading = true);
 
-    try {
-      final response = await Supabase.instance.client.auth.signInWithPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
+    await controller.login(context);
 
-      if (response.user != null) {
-        // Login bem-sucedido!
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login feito com sucesso!')),
-        );
-        
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainNavigation()),
-        );
-      }
-    } on AuthException catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro inesperado: $e')),
-      );
-    } finally {
-      setState(() => _loading = false);
-    }
+    setState(() => _loading = false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'E-mail'),
+              controller: controller.emailController,
+              decoration: InputDecoration(
+                labelText: 'E-mail',
+              ),
             ),
             TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Senha'),
-              obscureText: true,
+              controller: controller.senhaController,
+              decoration: InputDecoration(
+                labelText: 'Senha',
+              ),
             ),
             SizedBox(height: 20),
             _loading
-                ? CircularProgressIndicator()
+                ? CircularProgressIndicator(color: Colors.brown)
                 : ElevatedButton(
                     onPressed: _signIn,
                     child: Text('Entrar'),

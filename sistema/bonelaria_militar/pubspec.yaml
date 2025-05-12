@@ -67,6 +67,7 @@ flutter:
 
   assets:
     - assets/logo.png
+    - assets/capa.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
