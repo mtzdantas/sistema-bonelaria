@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'navigation/main_nav.dart';
 import 'supabase/supabase_client.dart';
 import 'auth/views/login.dart';
 import 'screens/funcionarios/funcionarios.dart';
