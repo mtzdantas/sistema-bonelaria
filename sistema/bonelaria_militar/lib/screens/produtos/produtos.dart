@@ -1,17 +1,172 @@
 import 'package:flutter/material.dart';
+import '../../supabase/supabase_client.dart';
+import '../../models/produto.dart';
+import '../../models/insumo.dart';
 import '../../utils/app_bar.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
-class ProdScreen extends StatelessWidget {
+// Classe temporaria, ainda vai ser criado um model para ela
+class ProdutoComInsumos {
+  final Produto produto;
+  final List<Map<String, dynamic>> insumosComQuantia;
+
+  ProdutoComInsumos({
+    required this.produto,
+    required this.insumosComQuantia,
+  });
+}
+
+class ProdScreen extends StatefulWidget {
   const ProdScreen({super.key});
+
+  @override
+  State<ProdScreen> createState() => _ProdScreenState();
+}
+
+class _ProdScreenState extends State<ProdScreen> {
+  List<ProdutoComInsumos> agrupadosList = [];
+  List<ProdutoComInsumos> filtradosList = [];
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    carregarProdutoInsumos();
+    _searchController.addListener(_filtrar);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> carregarProdutoInsumos() async {
+    final response = await SupabaseConfig.client
+        .from('produto_insumo')
+        .select('''
+          *,
+          produto(*),
+          insumo:insumos(*)
+        ''');
+
+    final rawList = response as List;
+
+    final Map<int, ProdutoComInsumos> agrupados = {};
+
+    for (var item in rawList) {
+      final produtoMap = item['produto'];
+      final insumoMap = item['insumo'];
+      final quantia = item['quantia_insumo'];
+
+      final produtoId = produtoMap['id_produto'];
+      final insumoComQuantia = {
+        'insumo': Insumo.fromMap(insumoMap),
+        'quantia': quantia,
+      };
+
+      if (agrupados.containsKey(produtoId)) {
+        agrupados[produtoId]!.insumosComQuantia.add(insumoComQuantia);
+      } else {
+        agrupados[produtoId] = ProdutoComInsumos(
+          produto: Produto.fromMap(produtoMap),
+          insumosComQuantia: [insumoComQuantia],
+        );
+      }
+    }
+
+    setState(() {
+      agrupadosList = agrupados.values.toList();
+      filtradosList = agrupadosList;
+    });
+  }
+
+  void _filtrar() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      filtradosList = agrupadosList.where((pi) {
+        final produtoNome = pi.produto.nome.toLowerCase();
+        return produtoNome.contains(query);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
-      
-      body: Center(
-        child: Text('Produtos'),
-      )
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: const InputDecoration(
+                labelText: 'Pesquisar produto',
+                prefixIcon: Icon(Symbols.search),
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text(
+              filtradosList.isNotEmpty
+                  ? 'Produtos encontrados (${filtradosList.length}):'
+                  : 'Nenhum produto encontrado',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filtradosList.length,
+              itemBuilder: (context, index) {
+                final item = filtradosList[index];
+                return Card(
+                  margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  elevation: 3,
+                  child: ExpansionTile(
+                    title: Text(
+                      item.produto.nome,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('Categoria: ${item.produto.categoria}'),
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Insumos necessários:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      ...item.insumosComQuantia.map((iq) {
+                        final insumo = iq['insumo'] as Insumo;
+                        final quantia = iq['quantia'];
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: ListTile(
+                            dense: true,
+                            contentPadding: const EdgeInsets.only(left: 8),
+                            title: Text(insumo.nome),
+                            subtitle: Text('Tipo: ${insumo.tipoDeInsumo} | Quantia: $quantia'),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
