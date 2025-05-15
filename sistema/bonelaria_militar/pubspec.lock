@@ -264,6 +264,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.257.0"
+  matcher:
+    dependency: transitive
+    description:
+      name: matcher
+      sha256: dc58c723c3c24bf8d3e2d3ad3f2f9d7bd9cf43ec6feaa64181775e60190153f2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.17"
   material_color_utilities:
     dependency: transitive
     description:
@@ -316,10 +324,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: d0d310befe2c8ab9e7f393288ccbb11b60c019c6b5afc21973eeee4dda2b35e9
+      sha256: "4adf4fd5423ec60a29506c76581bc05854c55e3a0b72d35bb28d661c9686edf2"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.17"
+    version: "2.2.15"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -412,10 +420,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "20cbd561f743a342c76c151d6ddb93a9ce6005751e7aa458baad3858bfbfb6ac"
+      sha256: "9f9f3d372d4304723e6136663bb291c0b93f5e4c8a4a6314347f481a33bda2b1"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.10"
+    version: "2.4.7"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -553,10 +561,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "8582d7f6fe14d2652b4c45c9b6c14c0b678c2af2d083a11b604caeba51930d79"
+      sha256: "6fc2f56536ee873eeb867ad176ae15f304ccccc357848b351f6f0d8d4a40d193"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.16"
+    version: "6.3.14"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -593,10 +601,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_web
-      sha256: "4bd2b7b4dc4d4d0b94e5babfffbca8eac1a126c7f3d6ecbc1a11013faa3abba2"
+      sha256: "772638d3b34c779ede05ba3d38af34657a05ac55b06279ea6edd409e323dca8e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.3.3"
   url_launcher_windows:
     dependency: transitive
     description:
@@ -663,4 +671,4 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=3.7.2 <4.0.0"
-  flutter: ">=3.27.0"
+  flutter: ">=3.24.0"
