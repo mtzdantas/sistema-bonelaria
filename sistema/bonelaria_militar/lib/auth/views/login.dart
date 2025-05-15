@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../controllers/login_controller.dart';
+import 'cadastro.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -49,6 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _signIn,
                     child: Text('Entrar'),
                   ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CadastroScreen()),
+                );
+              },
+              child: Text('Cadastrar-se'),
+            ),
           ],
         ),
       ),

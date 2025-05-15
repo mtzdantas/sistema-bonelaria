@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../supabase/supabase_client.dart';
 import '../../models/funcionario.dart';
 import '../../utils/app_bar.dart';
+import '../../auth/views/cadastro.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class FuncScreen extends StatefulWidget {
@@ -117,6 +118,19 @@ class _FuncScreenState extends State<FuncScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CadastroScreen(),
+            ),
+          );
+        },
+        backgroundColor: Colors.teal,
+        child: const Icon(Symbols.add),
+        tooltip: 'Cadastrar novo funcionário',
       ),
     );
   }
