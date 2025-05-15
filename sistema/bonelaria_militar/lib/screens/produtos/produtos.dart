@@ -12,6 +12,6 @@ class ProdScreen extends StatelessWidget {
       body: Center(
         child: Text('Produtos'),
       )
-    );;
+    );
   }
 }
