@@ -3,6 +3,7 @@ import '../../supabase/supabase_client.dart';
 import '../../models/produto.dart';
 import '../../models/insumo.dart';
 import '../../utils/app_bar.dart';
+import 'produto_cadastros_screen.dart'; 
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 // Classe temporaria, ainda vai ser criado um model para ela
@@ -150,7 +151,7 @@ class _ProdScreenState extends State<ProdScreen> {
                         final insumo = iq['insumo'] as Insumo;
                         final quantia = iq['quantia'];
                         return Padding(
-                          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: ListTile(
                             dense: true,
                             contentPadding: const EdgeInsets.only(left: 8),
@@ -159,6 +160,31 @@ class _ProdScreenState extends State<ProdScreen> {
                           ),
                         );
                       }),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () {
+                                // TODO: lógica de edição do produto
+                                debugPrint('Editar ${item.produto.nome}');
+                              },
+                              icon: const Icon(Icons.edit, color: Colors.blue),
+                              label: const Text('Editar Produto'),
+                            ),
+                            const SizedBox(width: 8),
+                            TextButton.icon(
+                              onPressed: () {
+                                // TODO: lógica de edição do produto
+                                debugPrint('Excluir ${item.produto.nome}');
+                              },
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              label: const Text('Excluir Produto'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 );
@@ -166,6 +192,16 @@ class _ProdScreenState extends State<ProdScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Adicionar novo produto',
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProdutoCadastroScreen()),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
