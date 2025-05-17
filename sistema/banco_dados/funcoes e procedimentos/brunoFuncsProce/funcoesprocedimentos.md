@@ -56,35 +56,39 @@ Nome: editar_produto_proc
 
 Parâmetros de entrada:
 
-p_id_produto (INTEGER): Identificador do produto que será atualizado.
+- p_id_produto (INTEGER): Identificador do produto que será atualizado.
 
-p_nome (TEXT): Novo nome para o produto.
+- p_nome (TEXT): Novo nome para o produto.
 
-p_categoria (TEXT): Nova categoria do produto.
+- p_categoria (TEXT): Nova categoria do produto.
 
-p_descricao (TEXT): Nova descrição do produto.
+- p_descricao (TEXT): Nova descrição do produto.
 
-p_quantidade_estoque (INTEGER): Novo valor para a quantidade em estoque do produto.
+- p_quantidade_estoque (INTEGER): Novo valor para a quantidade em estoque do produto.
 
-Retorno: Nenhum (procedimento do tipo VOID).
+- Retorno: Nenhum (procedimento do tipo VOID).
 
 Objetivo
 Este procedimento atualiza os dados de um produto existente na tabela produto com base no seu identificador (id_produto). Ele permite alterar o nome, a categoria, a descrição e a quantidade em estoque do produto. É útil para operações de manutenção de cadastro, garantindo que as informações estejam sempre atualizadas.
+
+[SQL da editar_produto_proc](./editarProduto.sql)
 
 ### Descrição do procedimento para editar um insumo
 Nome: editar_insumo_proc
 
 Parâmetros de entrada:
 
-p_id_insumo (INTEGER): Identificador do insumo que será atualizado.
+- p_id_insumo (INTEGER): Identificador do insumo que será atualizado.
 
-p_nome (VARCHAR): Novo nome do insumo.
+- p_nome (VARCHAR): Novo nome do insumo.
 
-p_quantidade_estoque (INTEGER): Nova quantidade em estoque do insumo.
+- p_quantidade_estoque (INTEGER): Nova quantidade em estoque do insumo.
 
-p_tipo_de_insumo (VARCHAR): Novo tipo do insumo (ex: líquido, sólido, etc.).
+- p_tipo_de_insumo (VARCHAR): Novo tipo do insumo (ex: líquido, sólido, etc.).
 
-Retorno: Nenhum (procedimento do tipo VOID).
+- Retorno: Nenhum (procedimento do tipo VOID).
 
 Objetivo
 Este procedimento atualiza as informações de um insumo existente na tabela insumos, identificando-o pelo seu id_insumo. Permite alterar o nome, a quantidade em estoque e o tipo do insumo. É útil para manter os dados do cadastro de insumos atualizados conforme mudanças no estoque ou classificação.
+
+[SQL da editar_insumo_proc](./editarInsumo.sql)
