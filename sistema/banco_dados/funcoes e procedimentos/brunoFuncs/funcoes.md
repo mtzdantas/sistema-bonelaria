@@ -22,6 +22,7 @@
 
 Objetivo: Esta função retorna todos os produtos com os insumos que fazem parte da composição de cada um, incluindo a quantidade usada de cada insumo. Ideal para exibição em relatórios, telas de visualização ou geração de documentos.
 
+[SQL da get_produtos_com_insumos](./exibirProdutos.sql)
 
 ### Descrição da função de adicionar um produto com um insumo
 - Nome: adicionar_produto_com_insumo
@@ -45,3 +46,4 @@ Objetivo: Esta função retorna todos os produtos com os insumos que fazem parte
 Objetivo
 Esta função cadastra um novo produto na tabela produto com os dados fornecidos e vincula um insumo existente a esse produto na tabela produto_insumo, registrando também a quantidade do insumo necessária. É útil para operações rápidas de inserção em sistemas administrativos ou APIs de backend que exigem o vínculo entre um produto e um único insumo no momento do cadastro.
 
+[SQL da adicionar_produto_com_insumo](./adicionarProdutos.sql)
