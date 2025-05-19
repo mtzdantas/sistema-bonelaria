@@ -4,6 +4,8 @@ import '../../models/produto.dart';
 import '../../models/insumo.dart';
 import '../../utils/app_bar.dart';
 import 'produto_cadastros_screen.dart'; 
+import 'produto_editar_screen.dart';
+import '../../services/produto_service.dart';  // caminho relativo correto
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 // Classe temporaria, ainda vai ser criado um model para ela
@@ -167,20 +169,47 @@ class _ProdScreenState extends State<ProdScreen> {
                           children: [
                             TextButton.icon(
                               onPressed: () {
-                                // TODO: lógica de edição do produto
-                                debugPrint('Editar ${item.produto.nome}');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProdutoEdicaoScreen(produto: item.produto),
+                                  ),
+                                ).then((_) => carregarProdutoInsumos()); // Atualiza a lista ao voltar
                               },
+
                               icon: const Icon(Icons.edit, color: Colors.blue),
                               label: const Text('Editar Produto'),
                             ),
                             const SizedBox(width: 8),
                             TextButton.icon(
-                              onPressed: () {
-                                // TODO: lógica de edição do produto
-                                debugPrint('Excluir ${item.produto.nome}');
-                              },
                               icon: const Icon(Icons.delete, color: Colors.red),
                               label: const Text('Excluir Produto'),
+                              onPressed: () async {
+                                final confirma = await showDialog<bool>(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                    title: const Text('Confirmar exclusão'),
+                                    content: Text('Excluir o produto "${item.produto.nome}"?'),
+                                    actions: [
+                                      TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
+                                      TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Excluir')),
+                                    ],
+                                  ),
+                                );
+
+                                if (confirma != true) return;
+
+                                final mensagemErro = await deletarProduto(item.produto.idProduto);
+
+                                if (!context.mounted) return;
+
+                                if (mensagemErro != null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensagemErro)));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Produto excluído com sucesso.')));
+                                  carregarProdutoInsumos();
+                                }
+                              },
                             ),
                           ],
                         ),
