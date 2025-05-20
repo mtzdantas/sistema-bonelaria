@@ -78,6 +78,7 @@ Um produto tem: nome, material, metragem do material, data de fabricação e dat
 | Requisito                     | Descrição                                                                                                      | Ator        |
 |------------------------------|----------------------------------------------------------------------------------------------------------------|-------------|
 | RF04.01 - Gerar Relatórios    | Gera relatórios detalhados com base nos produtos fabricados, informando quantidade produzida, material gasto, data de fabricação e preços. | Funcionário e Proprietário |
+| RF04.02 - Gerar PDF           | Gera arquivos PDF com base nos relatórios do sistema, possibilitando o acesso às informações fora do sistema.     | Funcionário e Proprietário |
 
 ---
 
@@ -89,19 +90,12 @@ Um produto tem: nome, material, metragem do material, data de fabricação e dat
 
 ---
 
-### Entidade PDF - RF06 - Gerar Relatórios em PDF  
-
-| Requisito                     | Descrição                                                                                                          | Ator        |
-|------------------------------|--------------------------------------------------------------------------------------------------------------------|-------------|
-| RF06.01 - Gerar PDF           | Gera arquivos PDF com base nos relatórios do sistema, possibilitando o acesso às informações fora do sistema.     | Funcionário e Proprietário |
-
----
-
-### Entidade Pagamento - RF07 - Realizar Pagamento às Costureiras  
+### Entidade Pagamento - RF07 - Gerenciar Pagamento 
 
 | Requisito                     | Descrição                                                                                                                                   | Ator        |
 |------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| RF07.01 - Realizar Pagamento  | Realiza pagamento às costureiras com base nas comissões calculadas, permitindo escolha de método de recebimento e confirmação no sistema. | Proprietário |
+| RF07.01 - Preferência de Pagamento  | O sistema gera o valor para do pagamento às costureiras com base nas comissões calculadas, permitindo escolherem o método de recebimento no sistema.| Funcionário e Proprietário |
+| RF07.02 - Confirmação de Pagamento  | O usuário confirma no sistema se o pagamento da comissão foi realizado ou se está pendente, podendo constar nos relatórios do sistema.| Funcionário e Proprietário |
 
 ---
 
