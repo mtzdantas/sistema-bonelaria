@@ -22,29 +22,36 @@ class _PedidoDetalhesScreenState extends State<PedidoDetalhesScreen> {
 
   Future<void> carregarProdutosDoPedido() async {
     final response = await SupabaseConfig.client
-        .from('produto_pedido')
-        .select(''' 
+      .from('produto_pedido')
+      .select('''
           quantidade_produto,
           valor_produto,
           produto (
             nome
+          ),
+          pedido (
+            status_pedido
           )
-        ''')
-        .eq('id_pedido', widget.idPedido);
+      ''')
+      .eq('id_pedido', widget.idPedido);
+
 
     double soma = 0;
 
     final lista = (response as List).map((item) {
       final quantidade = item['quantidade_produto'];
       final valor = item['valor_produto'];
+      final status = item['pedido']['status_pedido']; // acessa o status via relacionamento
       soma += quantidade * valor;
 
       return {
         'nome': item['produto']['nome'],
         'quantidade': quantidade,
         'valor': valor,
+        'status': status, // inclui no mapa
       };
     }).toList();
+
 
     setState(() {
       produtosDoPedido = lista;
@@ -97,6 +104,12 @@ class _PedidoDetalhesScreenState extends State<PedidoDetalhesScreen> {
                             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Texto em branco
                           ),
                         ),
+                        DataColumn(
+                          label: Text(
+                            'Status',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ],
                       rows: produtosDoPedido.map((produto) {
                         return DataRow(
@@ -106,18 +119,22 @@ class _PedidoDetalhesScreenState extends State<PedidoDetalhesScreen> {
                                 const SizedBox(width: 8),
                                 Text(
                                   produto['nome'],
-                                  style: const TextStyle(color: Colors.white), // Texto em branco
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ],
                             )),
                             DataCell(Text(
                               produto['quantidade'].toString(),
-                              style: const TextStyle(color: Colors.white70), // Texto um pouco mais suave
+                              style: const TextStyle(color: Colors.white),
                             )),
                             DataCell(Text(
                               produto['valor'].toStringAsFixed(2),
                               style: const TextStyle(color: Colors.white), 
                             )),
+                            DataCell(Text(
+                              produto['status'] ?? '',
+                              style: const TextStyle(color: Colors.white),
+                            ))
                           ],
                         );
                       }).toList(),
