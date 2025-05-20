@@ -4,6 +4,8 @@ import '../../models/pedidos.dart';
 import '../../services/pedido_service.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'pedido_detalhes_screen.dart';
+import 'pedido_cadastro_screen.dart';
+
 
 class PedScreen extends StatefulWidget {
   const PedScreen({super.key});
@@ -16,6 +18,18 @@ class _PedScreenState extends State<PedScreen> {
   List<Pedido> pedidos = [];
   List<Pedido> pedidosFiltrados = [];
   final TextEditingController _searchController = TextEditingController();
+
+  // Future<void> _abrirCadastroPedido() async {
+  //   final resultado = await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const CadastroPedidoPage()),
+  //   );
+
+  //   if (resultado == true) {
+  //     await carregarPedidos();
+  //   }
+  // }
+
 
   @override
   void initState() {
@@ -106,6 +120,19 @@ class _PedScreenState extends State<PedScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Adicionar novo pedido',
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CadastroPedidoPage()),
+          ).then((_) {
+            // Recarrega os pedidos ao voltar do cadastro
+            carregarPedidos();
+          });
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
