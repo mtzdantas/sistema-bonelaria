@@ -29,13 +29,6 @@ class CadastroController {
 
   Future<bool> cadastrarFuncionario(BuildContext context) async {
     try {
-      final idEndereco = await EnderecoService.inserirEndereco(
-        rua: ruaController.text.trim(),
-        bairro: bairroController.text.trim(),
-        numero: numeroController.text.trim(),
-        complemento: complementoController.text.trim(),
-      );
-      
       final userId = await AuthService.cadastrarUsuario(
         email: emailController.text.trim(),
         senha: senhaController.text.trim(),
@@ -44,6 +37,13 @@ class CadastroController {
       if (userId == null) {
         throw Exception('Falha ao obter userId após cadastro');
       }
+
+      final idEndereco = await EnderecoService.inserirEndereco(
+        rua: ruaController.text.trim(),
+        bairro: bairroController.text.trim(),
+        numero: numeroController.text.trim(),
+        complemento: complementoController.text.trim(),
+      );
 
       await FuncionarioService.inserirFuncionario(
         nome: nomeController.text.trim(),
