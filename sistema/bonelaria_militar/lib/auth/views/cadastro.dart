@@ -84,9 +84,12 @@ class _CadastroScreenState extends State<CadastroScreen> {
                 validator: validator.byField(credentials, 'email'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.senhaController,
+                onChanged: credentials.setSenha,
                 obscureText: true,
                 decoration: const InputDecoration(labelText: 'Senha'),
+                validator: validator.byField(credentials, 'senha'),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -94,20 +97,32 @@ class _CadastroScreenState extends State<CadastroScreen> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.ruaController,
+                onChanged: credentials.setRua,
                 decoration: const InputDecoration(labelText: 'Rua'),
+                validator: validator.byField(credentials, 'rua'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.numeroController,
+                onChanged: credentials.setNumero,
                 decoration: const InputDecoration(labelText: 'Número'),
+                validator: validator.byField(credentials, 'numero'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.bairroController,
+                onChanged: credentials.setBairro,
                 decoration: const InputDecoration(labelText: 'Bairro'),
+                validator: validator.byField(credentials, 'bairro'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.complementoController,
+                onChanged: credentials.setComplemento,
                 decoration: const InputDecoration(labelText: 'Complemento'),
+                validator: validator.byField(credentials, 'complemento'),
               ),
               const SizedBox(height: 24),
               ListenableBuilder(
