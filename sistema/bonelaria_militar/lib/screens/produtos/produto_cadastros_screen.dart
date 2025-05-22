@@ -167,7 +167,11 @@ class _ProdutoCadastroScreenState extends State<ProdutoCadastroScreen> {
                         decoration: const InputDecoration(labelText: 'Quantia'),
                         keyboardType: TextInputType.number,
                         onChanged: (value) => item['quantia'] = value,
-                        validator: (v) => (v == null || v.isEmpty) ? 'Informe a quantia' : null,
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return 'Informe a quantidade';
+                          if (int.tryParse(v) == null) return 'Quantidade inválida';
+                          return null;
+                        },
                       ),
                     ),
                     IconButton(
