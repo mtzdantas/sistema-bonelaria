@@ -3,6 +3,13 @@ import '../../models/insumo.dart';
 import '../../models/produto.dart';
 import '../../supabase/supabase_client.dart';
 
+class InsumoSelecionado {
+  Insumo? insumo;
+  String quantia;
+
+  InsumoSelecionado({this.insumo, this.quantia = ''});
+}
+
 class ProdutoEdicaoScreen extends StatefulWidget {
   final Produto produto;
 
@@ -20,13 +27,17 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
   final _quantidadeEstoqueController = TextEditingController();
 
   List<Insumo> todosInsumos = [];
-  List<Map<String, dynamic>> insumosSelecionados = [];
+  List<InsumoSelecionado> insumosSelecionados = [];
 
   @override
   void initState() {
     super.initState();
-    carregarInsumos();
-    carregarProduto();
+    carregarTudo();
+  }
+
+  Future<void> carregarTudo() async {
+    await carregarInsumos();
+    carregarProduto(); // Agora é seguro usar todosInsumos
   }
 
   void carregarProduto() {
@@ -40,7 +51,9 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
   Future<void> carregarInsumos() async {
     final response = await SupabaseConfig.client.from('insumos').select();
     setState(() {
-      todosInsumos = (response as List).map((e) => Insumo.fromMap(e)).toList();
+      todosInsumos = (response as List)
+          .map((e) => Insumo.fromMap(Map<String, dynamic>.from(e)))
+          .toList();
     });
   }
 
@@ -51,13 +64,12 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
         .eq('id_produto', produtoId);
 
     final List<Map<String, dynamic>> data = (response as List)
-      .map((e) => e as Map<String, dynamic>)
-      .toList();
-
+        .map((e) => Map<String, dynamic>.from(e))
+        .toList();
 
     final relacionados = data.map((item) {
       final insumo = todosInsumos.firstWhere((i) => i.idInsumo == item['id_insumo']);
-      return {'insumo': insumo, 'quantia': item['quantia_insumo'].toString()};
+      return InsumoSelecionado(insumo: insumo, quantia: item['quantia_insumo'].toString());
     }).toList();
 
     setState(() {
@@ -67,7 +79,7 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
 
   void adicionarInsumo() {
     setState(() {
-      insumosSelecionados.add({'insumo': null, 'quantia': ''});
+      insumosSelecionados.add(InsumoSelecionado());
     });
   }
 
@@ -95,8 +107,9 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
 
       // Insere os novos
       for (var entry in insumosSelecionados) {
-        final insumo = entry['insumo'] as Insumo;
-        final quantia = double.tryParse(entry['quantia']) ?? 0;
+        final insumo = entry.insumo;
+        if (insumo == null) continue;
+        final quantia = double.tryParse(entry.quantia) ?? 0;
 
         await SupabaseConfig.client.from('produto_insumo').insert({
           'id_produto': produtoId,
@@ -170,43 +183,97 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
               ...insumosSelecionados.asMap().entries.map((entry) {
                 final i = entry.key;
                 final item = entry.value;
-                return Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: DropdownButtonFormField<Insumo>(
-                        value: item['insumo'],
-                        items: todosInsumos.map((insumo) {
-                          return DropdownMenuItem(
-                            value: insumo,
-                            child: Text(insumo.nome),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            item['insumo'] = value;
-                          });
-                        },
-                        validator: (v) => v == null ? 'Selecione um insumo' : null,
-                        decoration: const InputDecoration(labelText: 'Insumo'),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      flex: 3,
-                      child: TextFormField(
-                        initialValue: item['quantia'],
-                        decoration: const InputDecoration(labelText: 'Quantia'),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) => item['quantia'] = value,
-                        validator: (v) => (v == null || v.isEmpty) ? 'Informe a quantia' : null,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => removerInsumo(i),
-                    ),
-                  ],
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isSmall = constraints.maxWidth < 600;
+
+                    if (isSmall) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DropdownButtonFormField<Insumo>(
+                            value: item.insumo,
+                            items: todosInsumos.map((insumo) {
+                              return DropdownMenuItem(
+                                value: insumo,
+                                child: Text(insumo.nome),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                item.insumo = value;
+                              });
+                            },
+                            validator: (v) => v == null ? 'Selecione um insumo' : null,
+                            decoration: const InputDecoration(labelText: 'Insumo'),
+                          ),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            initialValue: item.quantia,
+                            decoration: const InputDecoration(labelText: 'Quantia'),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => item.quantia = value,
+                            validator: (v) {
+                              if (v == null || v.isEmpty) return 'Informe a quantidade';
+                              if (double.tryParse(v) == null) return 'Quantidade inválida';
+                              return null;
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () => removerInsumo(i),
+                            ),
+                          ),
+                          const Divider(),
+                        ],
+                      );
+                    } else {
+                      return Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: DropdownButtonFormField<Insumo>(
+                              value: item.insumo,
+                              items: todosInsumos.map((insumo) {
+                                return DropdownMenuItem(
+                                  value: insumo,
+                                  child: Text(insumo.nome),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  item.insumo = value;
+                                });
+                              },
+                              validator: (v) => v == null ? 'Selecione um insumo' : null,
+                              decoration: const InputDecoration(labelText: 'Insumo'),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 3,
+                            child: TextFormField(
+                              initialValue: item.quantia,
+                              decoration: const InputDecoration(labelText: 'Quantia'),
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) => item.quantia = value,
+                              validator: (v) {
+                                if (v == null || v.isEmpty) return 'Informe a quantidade';
+                                if (double.tryParse(v) == null) return 'Quantidade inválida';
+                                return null;
+                              },
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () => removerInsumo(i),
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 );
               }),
               TextButton.icon(

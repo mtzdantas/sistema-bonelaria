@@ -138,43 +138,99 @@ class _ProdutoCadastroScreenState extends State<ProdutoCadastroScreen> {
               ...insumosSelecionados.asMap().entries.map((entry) {
                 final i = entry.key;
                 final item = entry.value;
-                return Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: DropdownButtonFormField<Insumo>(
-                        value: item['insumo'],
-                        items: todosInsumos.map((insumo) {
-                          return DropdownMenuItem(
-                            value: insumo,
-                            child: Text(insumo.nome),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            item['insumo'] = value;
-                          });
-                        },
-                        validator: (v) => v == null ? 'Selecione um insumo' : null,
-                        decoration: const InputDecoration(labelText: 'Insumo'),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      flex: 3,
-                      child: TextFormField(
-                        initialValue: item['quantia'],
-                        decoration: const InputDecoration(labelText: 'Quantia'),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) => item['quantia'] = value,
-                        validator: (v) => (v == null || v.isEmpty) ? 'Informe a quantia' : null,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => removerInsumo(i),
-                    ),
-                  ],
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isSmall = constraints.maxWidth < 600;
+
+                    if (isSmall) {
+                      // Layout empilhado para telas pequenas
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DropdownButtonFormField<Insumo>(
+                            value: item['insumo'],
+                            items: todosInsumos.map((insumo) {
+                              return DropdownMenuItem(
+                                value: insumo,
+                                child: Text(insumo.nome),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                item['insumo'] = value;
+                              });
+                            },
+                            validator: (v) => v == null ? 'Selecione um insumo' : null,
+                            decoration: const InputDecoration(labelText: 'Insumo'),
+                          ),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            initialValue: item['quantia'],
+                            decoration: const InputDecoration(labelText: 'Quantia'),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => item['quantia'] = value,
+                            validator: (v) {
+                              if (v == null || v.isEmpty) return 'Informe a quantidade';
+                              if (double.tryParse(v) == null) return 'Quantidade inválida';
+                              return null;
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () => removerInsumo(i),
+                            ),
+                          ),
+                          const Divider(),
+                        ],
+                      );
+                    } else {
+                      // Layout em linha para telas maiores
+                      return Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: DropdownButtonFormField<Insumo>(
+                              value: item['insumo'],
+                              items: todosInsumos.map((insumo) {
+                                return DropdownMenuItem(
+                                  value: insumo,
+                                  child: Text(insumo.nome),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  item['insumo'] = value;
+                                });
+                              },
+                              validator: (v) => v == null ? 'Selecione um insumo' : null,
+                              decoration: const InputDecoration(labelText: 'Insumo'),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 3,
+                            child: TextFormField(
+                              initialValue: item['quantia'],
+                              decoration: const InputDecoration(labelText: 'Quantia'),
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) => item['quantia'] = value,
+                              validator: (v) {
+                                if (v == null || v.isEmpty) return 'Informe a quantidade';
+                                if (double.tryParse(v) == null) return 'Quantidade inválida';
+                                return null;
+                              },
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () => removerInsumo(i),
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 );
               }),
               TextButton.icon(
