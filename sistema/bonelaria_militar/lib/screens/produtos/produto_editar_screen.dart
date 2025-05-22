@@ -3,6 +3,13 @@ import '../../models/insumo.dart';
 import '../../models/produto.dart';
 import '../../supabase/supabase_client.dart';
 
+class InsumoSelecionado {
+  Insumo? insumo;
+  String quantia;
+
+  InsumoSelecionado({this.insumo, this.quantia = ''});
+}
+
 class ProdutoEdicaoScreen extends StatefulWidget {
   final Produto produto;
 
@@ -20,13 +27,17 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
   final _quantidadeEstoqueController = TextEditingController();
 
   List<Insumo> todosInsumos = [];
-  List<Map<String, dynamic>> insumosSelecionados = [];
+  List<InsumoSelecionado> insumosSelecionados = [];
 
   @override
   void initState() {
     super.initState();
-    carregarInsumos();
-    carregarProduto();
+    carregarTudo();
+  }
+
+  Future<void> carregarTudo() async {
+    await carregarInsumos();
+    carregarProduto(); // Agora é seguro usar todosInsumos
   }
 
   void carregarProduto() {
@@ -40,7 +51,9 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
   Future<void> carregarInsumos() async {
     final response = await SupabaseConfig.client.from('insumos').select();
     setState(() {
-      todosInsumos = (response as List).map((e) => Insumo.fromMap(e)).toList();
+      todosInsumos = (response as List)
+          .map((e) => Insumo.fromMap(Map<String, dynamic>.from(e)))
+          .toList();
     });
   }
 
@@ -51,13 +64,12 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
         .eq('id_produto', produtoId);
 
     final List<Map<String, dynamic>> data = (response as List)
-      .map((e) => e as Map<String, dynamic>)
-      .toList();
-
+        .map((e) => Map<String, dynamic>.from(e))
+        .toList();
 
     final relacionados = data.map((item) {
       final insumo = todosInsumos.firstWhere((i) => i.idInsumo == item['id_insumo']);
-      return {'insumo': insumo, 'quantia': item['quantia_insumo'].toString()};
+      return InsumoSelecionado(insumo: insumo, quantia: item['quantia_insumo'].toString());
     }).toList();
 
     setState(() {
@@ -67,7 +79,7 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
 
   void adicionarInsumo() {
     setState(() {
-      insumosSelecionados.add({'insumo': null, 'quantia': ''});
+      insumosSelecionados.add(InsumoSelecionado());
     });
   }
 
@@ -95,8 +107,9 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
 
       // Insere os novos
       for (var entry in insumosSelecionados) {
-        final insumo = entry['insumo'] as Insumo;
-        final quantia = double.tryParse(entry['quantia']) ?? 0;
+        final insumo = entry.insumo;
+        if (insumo == null) continue;
+        final quantia = double.tryParse(entry.quantia) ?? 0;
 
         await SupabaseConfig.client.from('produto_insumo').insert({
           'id_produto': produtoId,
@@ -175,12 +188,11 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
                     final isSmall = constraints.maxWidth < 600;
 
                     if (isSmall) {
-                      // Layout empilhado para telas pequenas
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DropdownButtonFormField<Insumo>(
-                            value: item['insumo'],
+                            value: item.insumo,
                             items: todosInsumos.map((insumo) {
                               return DropdownMenuItem(
                                 value: insumo,
@@ -189,7 +201,7 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                item['insumo'] = value;
+                                item.insumo = value;
                               });
                             },
                             validator: (v) => v == null ? 'Selecione um insumo' : null,
@@ -197,10 +209,10 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
                           ),
                           const SizedBox(height: 8),
                           TextFormField(
-                            initialValue: item['quantia'],
+                            initialValue: item.quantia,
                             decoration: const InputDecoration(labelText: 'Quantia'),
                             keyboardType: TextInputType.number,
-                            onChanged: (value) => item['quantia'] = value,
+                            onChanged: (value) => item.quantia = value,
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Informe a quantidade';
                               if (double.tryParse(v) == null) return 'Quantidade inválida';
@@ -218,13 +230,12 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
                         ],
                       );
                     } else {
-                      // Layout em linha para telas maiores
                       return Row(
                         children: [
                           Expanded(
                             flex: 4,
                             child: DropdownButtonFormField<Insumo>(
-                              value: item['insumo'],
+                              value: item.insumo,
                               items: todosInsumos.map((insumo) {
                                 return DropdownMenuItem(
                                   value: insumo,
@@ -233,7 +244,7 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  item['insumo'] = value;
+                                  item.insumo = value;
                                 });
                               },
                               validator: (v) => v == null ? 'Selecione um insumo' : null,
@@ -244,10 +255,10 @@ class _ProdutoEdicaoScreenState extends State<ProdutoEdicaoScreen> {
                           Expanded(
                             flex: 3,
                             child: TextFormField(
-                              initialValue: item['quantia'],
+                              initialValue: item.quantia,
                               decoration: const InputDecoration(labelText: 'Quantia'),
                               keyboardType: TextInputType.number,
-                              onChanged: (value) => item['quantia'] = value,
+                              onChanged: (value) => item.quantia = value,
                               validator: (v) {
                                 if (v == null || v.isEmpty) return 'Informe a quantidade';
                                 if (double.tryParse(v) == null) return 'Quantidade inválida';
