@@ -118,50 +118,49 @@ erDiagram
 | ALI Produto          | PRODUTO, PRODUTOINSUMO        |     35 PF     |
 | ALI Insumos          | INSUMOS                       |     35 PF     |
 | ALI Pagamento/Contas | PAGAMENTO, CONTAAPAGAR        |     35 PF     |
-| ALI Endereço         | ENDERECO                      |     15 PF     |
-| **Total**            | **Ci**                        |   **190 PF**  |
+| ALI Endereço         | ENDERECO                      |     35 PF     |
+| **Total**            | **Ci**                        |   **210 PF**  |
 
 
 ### Contagem Detalhada (Cd)
 
-|     Descrição      |   Tipo   |   RLR   |   DER   |   Complexidade   |   Tamanho em PF   |
-| ------------------ | -------- | ------- | ------- | ---------------- | :---------------: |
-|  ALI Usuário       |   ALI    |    2    |    11   |       Baixa      | 7 PF              |
-|  ALI Projeto       |   ALI    |         |         |                  |  PF               |
-|  ALI Laboratorio   |   ALI    |         |         |                  |  PF               |
-|  ALI Endereço      |   AIE    |         |         |                  |  PF               |
-|  **Descrição**     | **Tipo** | **ALR** | **DER** | **Complexidade** | **Tamanho em PF** |
-|  Inserir Grupo     |    EE    |    1    |    2    |      Baixa       | 3 PF              |
-|  Atualizar Grupo   |    EE    |    1    |    2    |      Baixa       | 3 PF              |
-|  Consultar Grupo   |    CE    |    1    |    2    |      Baixa       | 3 PF              |
-|  Inserir Usuário   |    EE    |    2    |    9    |      Média       | 4 PF              |
-|  Atualizar Usuário |    EE    |    2    |    9    |      Média       | 4 PF              |
-|  Consultar Usuário |    CE    |    2    |    9    |      Média       | 4 PF              |
-|  Detalhar Usuário  |    CE    |    2    |    9    |      Média       | 4 PF              |
-|   **Total**        |          |         |         |     **Cd**       | **xx PF**         |
-
-| Descrição                    | Tipo | RLR | DER | Complexidade | Tamanho em PF |
-| ---------------------------- | ---- | --- | --- | ------------ | :-----------: |
-| Inserir Funcionário          | EE   | 3   | 6   | Média        |      4 PF     |
+|     Descrição        |   Tipo   |   RLR   |   DER   |   Complexidade   |   Tamanho em PF    |
+| ------------------   | -------- | ------- | ------- | ---------------- | :---------------:  |
+| ALI Funcionário      |   ALI    |    3    |    9    |      Média       | 9 PF               |
+| ALI Pedido           |   ALI    |    2    |    3    |      Baixa       | 6 PF               |
+| ALI Produto          |   ALI    |    2    |    4    |      Baixa       | 6 PF               |
+| ALI Insumos          |   ALI    |    1    |    3    |      Baixa       | 6 PF               |
+| ALI Pagamento/Contas |   ALI    |    2    |    7    |      Média       | 9 PF               |
+| ALI Endereço         |   ALI    |    1    |    4    |      Baixa       | 6 PF               |
+|  **Descrição**       | **Tipo** | **ALR** | **DER** | **Complexidade** | **Tamanho em PF**  |
+| Cadastrar Funcionário        | EE   | 3   | 6   | Média        |      4 PF     |
 | Atualizar Funcionário        | EE   | 3   | 6   | Média        |      4 PF     |
 | Consultar Funcionário        | CE   | 3   | 6   | Média        |      4 PF     |
-| Inserir Pedido               | EE   | 2   | 5   | Média        |      4 PF     |
+| Excluir Funcionário          | EE   | 1   | 6   | Baixa        |      3 PF     |
+| Cadastrar Pedido             | EE   | 3   | 5   | Alta         |      5 PF     |
+| Atualizar Pedido             | EE   | 2   | 6   | Média        |      4 PF     |
 | Consultar Pedido             | CE   | 2   | 5   | Média        |      4 PF     |
 | Consultar Detalhes do Pedido | CE   | 2   | 5   | Média        |      4 PF     |
-| Inserir Produto              | EE   | 2   | 5   | Média        |      4 PF     |
+| Excluir Pedido               | EE   | 3   | 6   | Média        |      4 PF     |
+| Cadastrar Produto            | EE   | 2   | 5   | Média        |      4 PF     |
+| Atualizar Produto            | EE   | 3   | 6   | Média        |      4 PF     |
 | Consultar Produto            | CE   | 2   | 5   | Média        |      4 PF     |
-| Inserir Insumo               | EE   | 1   | 3   | Baixa        |      3 PF     |
-| Atualizar Estoque de Insumo  | EE   | 1   | 2   | Baixa        |      3 PF     |
-| Gerar Conta a Pagar          | SE   | 2   | 4   | Média        |      5 PF     |
+| Excluir Produto              | EE   | 2   | 5   | Baixa        |      4 PF     |
+| Cadastrar Insumo             | EE   | 1   | 3   | Baixa        |      3 PF     |
+| Atualizar Insumo             | EE   | 1   | 3   | Baixa        |      3 PF     |
+| Atualizar Estoque de Insumo  | EE   | 1   | 2   | Média        |      4 PF     |
+| Gerar Conta a Pagar          | CE   | 2   | 4   | Média        |      4 PF     |
 | Consultar Contas a Pagar     | CE   | 2   | 4   | Média        |      4 PF     |
-| Registrar Pagamento          | EE   | 2   | 3   | Média        |      4 PF     |
+| Registrar Pagamento          | SE   | 2   | 3   | Alta         |      5 PF     |
+|   **Total**                  |      |     |     |   **Cd**     |   **117 PF**  |
+
 
 
 | Tipo            | Quantidade | Pontos de Função |
 | --------------- | ---------- | ---------------- |
-| ALI             | 5          | 38 PF            |
-| AIE             | 0          |                  |
-| EE              | 6          | 21 PF            |
-| CE              | 5          | 20 PF            |
+| ALI             | 6          | 42 PF            |
+| AIE             | 0          | 0  PF            |
+| EE              | 12         | 46 PF            |
+| CE              | 6          | 24 PF            |
 | SE              | 1          | 5 PF             |
-| **Total Geral** | **–**      | **84 PF**        |
+| **Total Geral** | **–**      | **117 PF**       |
