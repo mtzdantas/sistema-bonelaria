@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/cadastro_controller.dart';
+import '../../utils/validator/funcionario.dart';
+import '../../utils/validator/models/validator_funcionario.dart';
 
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});
@@ -31,6 +33,14 @@ class _CadastroScreenState extends State<CadastroScreen> {
     }
   }
 
+  final credentials = ModelValidatorFunc();
+  final validator = FuncionarioValidator();
+
+  bool isValid() {
+    final result = validator.validate(credentials);
+    return result.isValid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,27 +56,40 @@ class _CadastroScreenState extends State<CadastroScreen> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.nomeController,
+                onChanged: credentials.setNome,
                 decoration: const InputDecoration(labelText: 'Nome'),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Informe o nome' : null,
+                validator: validator.byField(credentials, 'nome'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.cpfController,
+                onChanged: credentials.setCpf,
                 decoration: const InputDecoration(labelText: 'CPF'),
+                validator: validator.byField(credentials, 'cpf'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.telefoneController,
+                onChanged: credentials.setTelefone,
                 decoration: const InputDecoration(labelText: 'Telefone'),
+                validator: validator.byField(credentials, 'telefone'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.emailController,
+                onChanged: credentials.setEmail,
                 decoration: const InputDecoration(labelText: 'Email'),
+                validator: validator.byField(credentials, 'email'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.senhaController,
+                onChanged: credentials.setSenha,
                 obscureText: true,
                 decoration: const InputDecoration(labelText: 'Senha'),
+                validator: validator.byField(credentials, 'senha'),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -74,25 +97,44 @@ class _CadastroScreenState extends State<CadastroScreen> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.ruaController,
+                onChanged: credentials.setRua,
                 decoration: const InputDecoration(labelText: 'Rua'),
+                validator: validator.byField(credentials, 'rua'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.numeroController,
+                onChanged: credentials.setNumero,
                 decoration: const InputDecoration(labelText: 'Número'),
+                validator: validator.byField(credentials, 'numero'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.bairroController,
+                onChanged: credentials.setBairro,
                 decoration: const InputDecoration(labelText: 'Bairro'),
+                validator: validator.byField(credentials, 'bairro'),
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller.complementoController,
+                onChanged: credentials.setComplemento,
                 decoration: const InputDecoration(labelText: 'Complemento'),
+                validator: validator.byField(credentials, 'complemento'),
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _cadastrarFuncionario,
-                child: const Text('Cadastrar'),
+              ListenableBuilder(
+                listenable: credentials,
+                builder: (context, child) {
+                  return ElevatedButton(
+                    onPressed: isValid() ? () {
+                      _cadastrarFuncionario();
+                    } : null,
+                    child: const Text('Cadastrar'),
+                  );
+                },
               ),
             ],
           ),

@@ -128,7 +128,6 @@ class _FuncScreenState extends State<FuncScreen> {
             ),
           );
         },
-        backgroundColor: Colors.teal,
         child: const Icon(Symbols.add),
         tooltip: 'Cadastrar novo funcionário',
       ),
