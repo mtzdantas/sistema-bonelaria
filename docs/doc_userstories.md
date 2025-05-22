@@ -13,6 +13,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | Data       | Versão  | Descrição                          | Autor                          |
 | :--------- | :-----: | :--------------------------------: | :----------------------------- |
 | 04/12/2024 | 0.0.1   | Documento inicial  | Cláudio Pereira Teixeira de Araújo |
+| 20/05/2024 | 0.0.2   | Atualização do documento  | Felipe Augusto Araújo da Cunha |
 
 
 ### User Story US01 - Manter Funcionário
