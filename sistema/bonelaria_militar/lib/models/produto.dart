@@ -15,11 +15,11 @@ class Produto {
 
   factory Produto.fromMap(Map<String, dynamic> map) {
     return Produto(
-      idProduto: map['id_produto'],
-      nome: map['nome'],
-      categoria: map['categoria'],
-      descricao: map['descricao'],
-      quantidadeEstoque: map['quantidade_estoque'],
+      idProduto: map['id_produto'] ?? 0,
+      nome: map['nome'] ?? '',
+      categoria: map['categoria'] ?? '',
+      descricao: map['descricao'] ?? '',
+      quantidadeEstoque: map['quantidade_estoque'] ?? 0,
     );
   }
 }
