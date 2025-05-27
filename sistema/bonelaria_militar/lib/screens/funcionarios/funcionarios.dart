@@ -120,16 +120,16 @@ class _FuncScreenState extends State<FuncScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        tooltip: 'Cadastrar novo funcionário',
+        onPressed: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const CadastroScreen(),
             ),
           );
         },
-        child: const Icon(Symbols.add),
-        tooltip: 'Cadastrar novo funcionário',
+        child: const Icon(Symbols.add)
       ),
     );
   }

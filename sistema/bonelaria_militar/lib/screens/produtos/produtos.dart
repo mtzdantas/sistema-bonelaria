@@ -207,7 +207,7 @@ class _ProdScreenState extends State<ProdScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensagemErro)));
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Produto excluído com sucesso.')));
-                                  carregarProdutoInsumos();
+                                  await carregarProdutoInsumos();
                                 }
                               },
                             ),
@@ -224,8 +224,8 @@ class _ProdScreenState extends State<ProdScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Adicionar novo produto',
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const ProdutoCadastroScreen()),
           );

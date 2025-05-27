@@ -20,8 +20,8 @@ void main() {
       final produtoPedido = ProdutoPedido.fromMap(map);
 
       expect(produtoPedido.nomeProduto, produtoMap['nome']);
-      expect(produtoPedido.quantidade, map['quantidade_produto']);
-      expect(produtoPedido.valor, (map['valor_produto'] as num).toDouble());
+      expect(produtoPedido.quantidade, map['quantidade_produto'] ?? 0);
+      expect(produtoPedido.valor, (map['valor_produto'] as num?)?.toDouble() ?? 0.0);
     });
   });
 }

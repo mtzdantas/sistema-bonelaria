@@ -12,12 +12,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final controller = LoginController();
   bool _loading = false;
+  bool _senhaVisivel = false;
+
 
   Future<void> _signIn() async {
     setState(() => _loading = true);
-
     await controller.login(context);
-
     setState(() => _loading = false);
   }
 
@@ -39,8 +39,19 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextField(
               controller: controller.senhaController,
+              obscureText: !_senhaVisivel,
               decoration: InputDecoration(
                 labelText: 'Senha',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _senhaVisivel ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _senhaVisivel = !_senhaVisivel;
+                    });
+                  },
+                ),
               ),
             ),
             SizedBox(height: 20),

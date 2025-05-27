@@ -20,7 +20,10 @@ void main() {
     final pedido = Pedido.fromMap(map);
 
     expect(pedido.id, map['id_pedido']);
-    final funcionario = map['funcionario'] as Map<String, dynamic>;
+
+    expect(map['funcionario'], isNotNull);
+    final funcionario = map['funcionario']! as Map<String, dynamic>;
+
     expect(pedido.costureiraNome, funcionario['nome']);
     expect(pedido.status, map['status_pedido']);
     expect(pedido.data, dataNow);

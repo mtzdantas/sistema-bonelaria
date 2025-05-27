@@ -14,21 +14,26 @@ class LoginController {
         senhaController.text,
       );
 
-      if (response.user != null) {
+      if (response.user != null && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login realizado com sucesso')),
         );
-        Navigator.pushReplacement(
+
+        await Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MainNavigation()),
         );
+
       } else {
         throw Exception("Usuário nulo");
       }
+
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Usuário ou senha inválidos')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Usuário ou senha inválidos')),
+        );
+      }
     }
   }
 }

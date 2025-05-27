@@ -22,7 +22,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         TextButton.icon(
           onPressed: () async {
             await Supabase.instance.client.auth.signOut();
-            Navigator.pushReplacementNamed(context, '/login');
+
+            if (!context.mounted) return;
+
+            await Navigator.pushReplacementNamed(context, '/login');
           },
           icon: const Icon(Symbols.logout, color: Colors.white),
           label: const Text(
