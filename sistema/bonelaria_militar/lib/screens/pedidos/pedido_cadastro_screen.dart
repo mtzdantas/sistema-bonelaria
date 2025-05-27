@@ -5,10 +5,10 @@ class CadastroPedidoPage extends StatefulWidget {
   const CadastroPedidoPage({Key? key}) : super(key: key);
 
   @override
-  _CadastroPedidoPageState createState() => _CadastroPedidoPageState();
+  CadastroPedidoPageState createState() => CadastroPedidoPageState();
 }
 
-class _CadastroPedidoPageState extends State<CadastroPedidoPage> {
+class CadastroPedidoPageState extends State<CadastroPedidoPage> {
   final _formKey = GlobalKey<FormState>();
 
   // Controllers
@@ -85,14 +85,12 @@ class _CadastroPedidoPageState extends State<CadastroPedidoPage> {
       return;
     }
 
-    // Valida todos os itens
     for (final item in _itens) {
-      if (item.produtoId == null ||
-          item.quantidade <= 0 ||
-          item.valor <= 0.0) {
+      if (item.produtoId == null || item.quantidade <= 0 || item.valor <= 0.0) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Preencha corretamente todos os campos dos itens.')),
+            content: Text('Preencha corretamente todos os campos dos itens.'),
+          ),
         );
         return;
       }
@@ -103,7 +101,6 @@ class _CadastroPedidoPageState extends State<CadastroPedidoPage> {
     });
 
     try {
-      // 1) Cria o pedido e retorna o ID
       final pedidoResp = await SupabaseConfig.client
           .from('pedido')
           .insert({
@@ -116,7 +113,6 @@ class _CadastroPedidoPageState extends State<CadastroPedidoPage> {
 
       final int idPedido = pedidoResp['id_pedido'];
 
-      // 2) Prepara lista de itens para inserção em lote
       final itensParaInserir = _itens.map((item) => {
             'id_pedido': idPedido,
             'id_produto': item.produtoId,
@@ -128,21 +124,29 @@ class _CadastroPedidoPageState extends State<CadastroPedidoPage> {
           .from('produto_pedido')
           .insert(itensParaInserir);
 
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pedido cadastrado com sucesso!')),
       );
       Navigator.pop(context);
     } catch (e) {
       debugPrint('Erro ao salvar pedido: $e');
+
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao salvar pedido: $e')),
       );
     } finally {
-      setState(() {
-        salvando = false;
-      });
+      if (mounted) {
+        setState(() {
+          salvando = false;
+        });
+      }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

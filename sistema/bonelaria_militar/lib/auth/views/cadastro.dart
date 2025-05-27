@@ -22,16 +22,24 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   void _cadastrarFuncionario() async {
     if (_formKey.currentState!.validate()) {
-      final sucesso = await controller.cadastrarFuncionario(context);
+      final sucesso = await controller.cadastrarFuncionario();
+
+      if (!mounted) return;
 
       if (sucesso) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cadastro realizado com sucesso!')),
         );
-        Navigator.pushReplacementNamed(context, '/login');
+        await Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro ao cadastrar funcionário.')),
+        );
       }
     }
   }
+
+
 
   final credentials = ModelValidatorFunc();
   final validator = FuncionarioValidator();

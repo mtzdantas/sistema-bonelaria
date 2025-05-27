@@ -4,16 +4,15 @@ import '../../services/endereco_service.dart';
 import '../data/auth_service.dart';
 
 class CadastroController {
-  final nomeController = TextEditingController();
-  final cpfController = TextEditingController();
-  final telefoneController = TextEditingController();
-  final emailController = TextEditingController();
-  final senhaController = TextEditingController();
-
-  final ruaController = TextEditingController();
-  final bairroController = TextEditingController();
-  final numeroController = TextEditingController();
-  final complementoController = TextEditingController();
+  final TextEditingController nomeController = TextEditingController();
+  final TextEditingController cpfController = TextEditingController();
+  final TextEditingController telefoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
+  final TextEditingController ruaController = TextEditingController();
+  final TextEditingController bairroController = TextEditingController();
+  final TextEditingController numeroController = TextEditingController();
+  final TextEditingController complementoController = TextEditingController();
 
   void dispose() {
     nomeController.dispose();
@@ -27,15 +26,15 @@ class CadastroController {
     complementoController.dispose();
   }
 
-  Future<bool> cadastrarFuncionario(BuildContext context) async {
+  Future<bool> cadastrarFuncionario() async {
     try {
-      final userId = await AuthService.cadastrarUsuario(
+      final String? userId = await AuthService.cadastrarUsuario(
         email: emailController.text.trim(),
         senha: senhaController.text.trim(),
       );
 
       if (userId == null) {
-        throw Exception('Falha ao obter userId após cadastro');
+        return false;
       }
 
       final idEndereco = await EnderecoService.inserirEndereco(
@@ -54,21 +53,10 @@ class CadastroController {
         authUserId: userId,
       );
 
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Cadastro realizado com sucesso!')),
-        );
-        Navigator.pop(context);
-      }
-
       return true;
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao cadastrar: ${e.toString()}')),
-        );
-      }
+      print('Erro ao cadastrar funcionário: $e');
+      return false;
     }
-    return false;
   }
 }
