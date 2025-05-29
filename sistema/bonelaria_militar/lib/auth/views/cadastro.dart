@@ -1,7 +1,7 @@
+import 'package:bonelaria_militar/auth/controllers/cadastro_controller.dart';
+import 'package:bonelaria_militar/utils/validator/funcionario.dart';
+import 'package:bonelaria_militar/utils/validator/models/validator_funcionario.dart';
 import 'package:flutter/material.dart';
-import '../controllers/cadastro_controller.dart';
-import '../../utils/validator/funcionario.dart';
-import '../../utils/validator/models/validator_funcionario.dart';
 
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});

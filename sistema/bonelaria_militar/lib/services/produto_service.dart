@@ -1,4 +1,4 @@
-import '../supabase/supabase_client.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 import 'package:flutter/material.dart';
 import '../../models/produto.dart';
 import '../screens/produtos/components/produto_form.dart';

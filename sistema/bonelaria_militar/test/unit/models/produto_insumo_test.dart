@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:faker/faker.dart';
 import 'package:bonelaria_militar/models/produto_insumo.dart';
+import 'package:faker/faker.dart';
+import 'package:flutter_test/flutter_test.dart';
 /*import 'package:bonelaria_militar/models/produto.dart';
 import 'package:bonelaria_militar/models/insumo.dart';
 */

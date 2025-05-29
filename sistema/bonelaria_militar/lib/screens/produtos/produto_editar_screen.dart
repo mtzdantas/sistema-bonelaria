@@ -1,5 +1,5 @@
+import 'package:bonelaria_militar/models/produto.dart';
 import 'package:flutter/material.dart';
-import '../../models/produto.dart';
 import '../../services/produto_service.dart'; // importando service
 import '../produtos/components/produto_form.dart';
 

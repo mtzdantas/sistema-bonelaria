@@ -1,17 +1,27 @@
+import 'package:bonelaria_militar/auth/data/auth_service.dart';
+import 'package:bonelaria_militar/services/endereco_service.dart';
+import 'package:bonelaria_militar/services/funcionario_service.dart';
 import 'package:flutter/material.dart';
-import '../../services/funcionario_service.dart';
-import '../../services/endereco_service.dart';
-import '../data/auth_service.dart';
 
+/// Controller responsável por gerenciar o estado e lógica do formulário de cadastro.
 class CadastroController {
+  /// Controlador do campo de nome.
   final TextEditingController nomeController = TextEditingController();
+  /// Controlador do campo de cpf.
   final TextEditingController cpfController = TextEditingController();
+  /// Controlador do campo de telefone.
   final TextEditingController telefoneController = TextEditingController();
+  /// Controlador do campo de e-mail.
   final TextEditingController emailController = TextEditingController();
+  /// Controlador do campo de senha.
   final TextEditingController senhaController = TextEditingController();
+  /// Controlador do campo de rua.
   final TextEditingController ruaController = TextEditingController();
+  /// Controlador do campo de bairro.
   final TextEditingController bairroController = TextEditingController();
+  /// Controlador do campo de numero.
   final TextEditingController numeroController = TextEditingController();
+  /// Controlador do campo de complemento.
   final TextEditingController complementoController = TextEditingController();
 
   void dispose() {
@@ -28,7 +38,7 @@ class CadastroController {
 
   Future<bool> cadastrarFuncionario() async {
     try {
-      final String? userId = await AuthService.cadastrarUsuario(
+      final userId = await AuthService.cadastrarUsuario(
         email: emailController.text.trim(),
         senha: senhaController.text.trim(),
       );
@@ -54,8 +64,8 @@ class CadastroController {
       );
 
       return true;
-    } catch (e) {
-      print('Erro ao cadastrar funcionário: $e');
+    } on Exception catch (e) {
+      debugPrint('Erro ao cadastrar funcionário: $e');
       return false;
     }
   }

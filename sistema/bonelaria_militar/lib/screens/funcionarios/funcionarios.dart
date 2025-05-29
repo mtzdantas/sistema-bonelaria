@@ -1,8 +1,8 @@
+import 'package:bonelaria_militar/auth/views/cadastro.dart';
+import 'package:bonelaria_militar/models/funcionario.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
+import 'package:bonelaria_militar/utils/app_bar.dart';
 import 'package:flutter/material.dart';
-import '../../supabase/supabase_client.dart';
-import '../../models/funcionario.dart';
-import '../../utils/app_bar.dart';
-import '../../auth/views/cadastro.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class FuncScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
+import 'package:bonelaria_militar/auth/controllers/login_controller.dart';
+import 'package:bonelaria_militar/auth/views/cadastro.dart';
 import 'package:flutter/material.dart';
-import '../controllers/login_controller.dart';
-import 'cadastro.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,8 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             TextField(
               controller: controller.emailController,
-              decoration: InputDecoration(
-                labelText: 'E-mail',
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                hintText: 'Digite seu email',
               ),
             ),
             TextField(
@@ -54,12 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _loading
-                ? CircularProgressIndicator(color: Colors.brown)
+                ? const CircularProgressIndicator(color: Colors.brown)
                 : ElevatedButton(
                     onPressed: _signIn,
-                    child: Text('Entrar'),
+                    child: const Text('Entrar'),
                   ),
             TextButton(
               onPressed: () {
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   MaterialPageRoute(builder: (context) => const CadastroScreen()),
                 );
               },
-              child: Text('Cadastrar-se'),
+              child: const Text('Cadastrar-se'),
             ),
           ],
         ),
