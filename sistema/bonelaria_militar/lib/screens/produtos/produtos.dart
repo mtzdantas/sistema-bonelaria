@@ -55,7 +55,7 @@ class _ProdScreenState extends State<ProdScreen> {
 
     final rawList = response as List;
 
-    final Map<int, ProdutoComInsumos> agrupados = {};
+    final agrupados = <int, ProdutoComInsumos>{};
 
     for (var item in rawList) {
       final produtoMap = item['produto'];
