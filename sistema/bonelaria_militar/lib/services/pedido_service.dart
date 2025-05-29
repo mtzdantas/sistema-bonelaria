@@ -1,5 +1,5 @@
-import '../supabase/supabase_client.dart';
-import '../models/pedidos.dart';
+import 'package:bonelaria_militar/models/pedidos.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 
 class PedidoService {
   static Future<List<Pedido>> buscarPedidos() async {

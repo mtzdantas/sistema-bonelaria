@@ -1,5 +1,5 @@
-import 'produto.dart';
-import 'insumo.dart';
+import 'package:bonelaria_militar/models/insumo.dart';
+import 'package:bonelaria_militar/models/produto.dart';
 
 class ProdutoInsumo {
   final int idProdutoInsumo;

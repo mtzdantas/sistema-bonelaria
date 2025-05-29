@@ -1,6 +1,6 @@
+import 'package:bonelaria_militar/auth/data/auth_service.dart';
+import 'package:bonelaria_militar/navigation/main_nav.dart';
 import 'package:flutter/material.dart';
-import '../data/auth_service.dart';
-import '../../navigation/main_nav.dart';
 
 class LoginController {
   final emailController = TextEditingController();
@@ -20,9 +20,11 @@ class LoginController {
         );
 
         await Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainNavigation()),
-        );
+        context,
+        MaterialPageRoute(
+          builder: (final BuildContext context) => const MainNavigation(),
+        ),
+      );
 
       } else {
         throw Exception("Usuário nulo");

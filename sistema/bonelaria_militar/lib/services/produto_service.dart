@@ -1,4 +1,4 @@
-import '../supabase/supabase_client.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 
 Future<String?> deletarProduto(int idProduto) async {
   // Verifica se o produto está em algum pedido

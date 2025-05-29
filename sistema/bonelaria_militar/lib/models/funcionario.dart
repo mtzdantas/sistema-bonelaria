@@ -1,4 +1,4 @@
-import 'endereco.dart';
+import 'package:bonelaria_militar/models/endereco.dart';
 
 class Funcionario {
   final int idFuncionario;
