@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:faker/faker.dart';
 import 'package:bonelaria_militar/models/pedidos.dart';
+import 'package:faker/faker.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final faker = Faker();

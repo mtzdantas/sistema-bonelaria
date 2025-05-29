@@ -1,11 +1,11 @@
+import 'package:bonelaria_militar/models/insumo.dart';
+import 'package:bonelaria_militar/models/produto.dart';
+import 'package:bonelaria_militar/screens/produtos/produto_cadastros_screen.dart';
+import 'package:bonelaria_militar/screens/produtos/produto_editar_screen.dart';
+import 'package:bonelaria_militar/services/produto_service.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
+import 'package:bonelaria_militar/utils/app_bar.dart';
 import 'package:flutter/material.dart';
-import '../../supabase/supabase_client.dart';
-import '../../models/produto.dart';
-import '../../models/insumo.dart';
-import '../../utils/app_bar.dart';
-import 'produto_cadastros_screen.dart'; 
-import 'produto_editar_screen.dart';
-import '../../services/produto_service.dart';  // caminho relativo correto
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 // Classe temporaria, ainda vai ser criado um model para ela

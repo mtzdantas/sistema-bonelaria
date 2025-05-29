@@ -1,10 +1,10 @@
+import 'package:bonelaria_militar/models/pedidos.dart';
+import 'package:bonelaria_militar/screens/pedidos/pedido_cadastro_screen.dart';
+import 'package:bonelaria_militar/screens/pedidos/pedido_detalhes_screen.dart';
+import 'package:bonelaria_militar/services/pedido_service.dart';
+import 'package:bonelaria_militar/utils/app_bar.dart';
 import 'package:flutter/material.dart';
-import '../../utils/app_bar.dart';
-import '../../models/pedidos.dart';
-import '../../services/pedido_service.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'pedido_detalhes_screen.dart';
-import 'pedido_cadastro_screen.dart';
 
 
 class PedScreen extends StatefulWidget {

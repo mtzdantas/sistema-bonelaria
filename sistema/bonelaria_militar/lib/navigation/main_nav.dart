@@ -1,8 +1,8 @@
+import 'package:bonelaria_militar/screens/funcionarios/funcionarios.dart';
+import 'package:bonelaria_militar/screens/pedidos/pedidos.dart';
+import 'package:bonelaria_militar/screens/produtos/produtos.dart';
+import 'package:bonelaria_militar/screens/relatorios/relatorios.dart';
 import 'package:flutter/material.dart';
-import '../screens/funcionarios/funcionarios.dart';
-import '../screens/pedidos/pedidos.dart';
-import '../screens/produtos/produtos.dart';
-import '../screens/relatorios/relatorios.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class MainNavigation extends StatefulWidget {

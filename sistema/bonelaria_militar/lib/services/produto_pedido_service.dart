@@ -1,5 +1,5 @@
+import 'package:bonelaria_militar/models/produto_pedido.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/produto_pedido.dart';
 
 class ProdutoPedidoService {
   static Future<List<ProdutoPedido>> buscarProdutosDoPedido(int idPedido) async {

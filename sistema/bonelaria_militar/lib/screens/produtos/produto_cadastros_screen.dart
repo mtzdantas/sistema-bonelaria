@@ -1,6 +1,6 @@
+import 'package:bonelaria_militar/models/insumo.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 import 'package:flutter/material.dart';
-import '../../models/insumo.dart';
-import '../../supabase/supabase_client.dart';
 
 class ProdutoCadastroScreen extends StatefulWidget {
   const ProdutoCadastroScreen({super.key});

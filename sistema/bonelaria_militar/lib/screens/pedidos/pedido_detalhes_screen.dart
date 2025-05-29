@@ -1,5 +1,5 @@
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 import 'package:flutter/material.dart';
-import '../../supabase/supabase_client.dart';
 
 class PedidoDetalhesScreen extends StatefulWidget {
   final int idPedido;

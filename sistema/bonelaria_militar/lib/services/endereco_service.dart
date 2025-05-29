@@ -1,4 +1,4 @@
-import '../supabase/supabase_client.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 
 class EnderecoService {
   static final _client = SupabaseConfig.client;

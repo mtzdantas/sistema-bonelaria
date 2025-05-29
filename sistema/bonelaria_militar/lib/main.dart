@@ -1,10 +1,10 @@
+import 'package:bonelaria_militar/auth/views/login.dart';
+import 'package:bonelaria_militar/screens/funcionarios/funcionarios.dart';
+import 'package:bonelaria_militar/screens/pedidos/pedidos.dart';
+import 'package:bonelaria_militar/screens/produtos/produtos.dart';
+import 'package:bonelaria_militar/screens/relatorios/relatorios.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
 import 'package:flutter/material.dart';
-import 'supabase/supabase_client.dart';
-import 'auth/views/login.dart';
-import 'screens/funcionarios/funcionarios.dart';
-import 'screens/pedidos/pedidos.dart';
-import 'screens/produtos/produtos.dart';
-import 'screens/relatorios/relatorios.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/login',
       routes: {
-        '/login': (context) => LoginScreen(),
-        '/funcionarios': (context) => FuncScreen(),
-        '/pedidos': (context) => PedScreen(),
-        '/produtos': (context) => ProdScreen(),
-        '/relatorios': (context) => RelScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/funcionarios': (context) => const FuncScreen(),
+        '/pedidos': (context) => const PedScreen(),
+        '/produtos': (context) => const ProdScreen(),
+        '/relatorios': (context) => const RelScreen(),
       },
     );
   }   

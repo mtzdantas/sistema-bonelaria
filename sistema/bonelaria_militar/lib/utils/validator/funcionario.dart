@@ -1,5 +1,5 @@
+import 'package:bonelaria_militar/utils/validator/models/validator_funcionario.dart';
 import 'package:lucid_validation/lucid_validation.dart';
-import 'models/validator_funcionario.dart';
 
 class FuncionarioValidator extends LucidValidator<ModelValidatorFunc> {
   FuncionarioValidator() {
