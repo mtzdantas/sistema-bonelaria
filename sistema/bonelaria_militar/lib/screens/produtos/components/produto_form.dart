@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../supabase/supabase_client.dart';
-import '../../../models/insumo.dart';
-import '../../../models/produto.dart';
+import 'package:bonelaria_militar/supabase/supabase_client.dart';
+import 'package:bonelaria_militar/models/insumo.dart';
+import 'package:bonelaria_militar/models/produto.dart';
 
 typedef ProdutoSubmitCallback = Future<void> Function({
   required String nome,

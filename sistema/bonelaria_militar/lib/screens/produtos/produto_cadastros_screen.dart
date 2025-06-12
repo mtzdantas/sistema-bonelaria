@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../services/produto_service.dart';
-import '../produtos/components/produto_form.dart';
+import 'package:bonelaria_militar/services/produto_service.dart';
+import 'package:bonelaria_militar/screens/produtos/components/produto_form.dart';
 
 
 class ProdutoCadastroScreen extends StatelessWidget {

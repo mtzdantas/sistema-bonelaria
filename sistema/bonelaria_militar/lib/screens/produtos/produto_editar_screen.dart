@@ -1,7 +1,7 @@
 import 'package:bonelaria_militar/models/produto.dart';
 import 'package:flutter/material.dart';
-import '../../services/produto_service.dart'; // importando service
-import '../produtos/components/produto_form.dart';
+import 'package:bonelaria_militar/services/produto_service.dart';
+import 'package:bonelaria_militar/screens/produtos/components/produto_form.dart';
 
 class ProdutoEdicaoScreen extends StatelessWidget {
   final Produto produto;
