@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bonelaria_militar/supabase/supabase_client.dart';
 import 'package:bonelaria_militar/models/insumo.dart';
 import 'package:bonelaria_militar/models/produto.dart';
+import 'package:bonelaria_militar/services/produto_insumo_service.dart';
+import 'package:bonelaria_militar/services/insumo_service.dart';
 
 typedef ProdutoSubmitCallback = Future<void> Function({
   required String nome,
@@ -11,11 +12,13 @@ typedef ProdutoSubmitCallback = Future<void> Function({
   required List<InsumoSelecionado> insumos,
 });
 
-
 class InsumoSelecionado {
   Insumo? insumo;
   String quantia;
-  InsumoSelecionado({this.insumo, this.quantia = ''});
+  TextEditingController controller;
+
+  InsumoSelecionado({this.insumo, this.quantia = ''})
+      : controller = TextEditingController(text: quantia);
 }
 
 class ProdutoForm extends StatefulWidget {
@@ -47,9 +50,9 @@ class _ProdutoFormState extends State<ProdutoForm> {
   }
 
   Future<void> carregarInsumos() async {
-    final response = await SupabaseConfig.client.from('insumos').select();
+    final insumos = await carregarTodosInsumos();
     setState(() {
-      todosInsumos = (response as List).map((e) => Insumo.fromMap(e)).toList();
+      todosInsumos = insumos;
     });
   }
 
@@ -59,18 +62,17 @@ class _ProdutoFormState extends State<ProdutoForm> {
     _descricaoController.text = produto.descricao;
     _quantidadeEstoqueController.text = produto.quantidadeEstoque.toString();
 
-    final response = await SupabaseConfig.client
-        .from('produto_insumo')
-        .select('id_insumo, quantia_insumo')
-        .eq('id_produto', produto.idProduto);
+    final produtoComInsumos = await carregarProdutoComInsumos(produto.idProduto);
 
-    final data = (response as List).map((e) => Map<String, dynamic>.from(e)).toList();
+    if (produtoComInsumos == null) return;
 
-    final relacionados = data.map((item) {
-      final insumo = todosInsumos.firstWhere((i) => i.idInsumo == item['id_insumo']);
+    final relacionados = produtoComInsumos.insumosComQuantia.map((item) {
+      final insumo = item['insumo'] as Insumo;
+      final quantia = item['quantia'].toString();
+
       return InsumoSelecionado(
-        insumo: insumo,
-        quantia: item['quantia_insumo'].toString(),
+        insumo: todosInsumos.firstWhere((i) => i.idInsumo == insumo.idInsumo),
+        quantia: quantia,
       );
     }).toList();
 
@@ -87,12 +89,17 @@ class _ProdutoFormState extends State<ProdutoForm> {
 
   void removerInsumo(int index) {
     setState(() {
+      insumosSelecionados[index].controller.dispose(); // libera o controller
       insumosSelecionados.removeAt(index);
     });
   }
 
   void submit() {
     if (_formKey.currentState?.validate() != true) return;
+
+    for (var item in insumosSelecionados) {
+      item.quantia = item.controller.text.trim();
+    }
 
     widget.onSubmit(
       nome: _nomeController.text.trim(),
@@ -109,6 +116,9 @@ class _ProdutoFormState extends State<ProdutoForm> {
     _categoriaController.dispose();
     _descricaoController.dispose();
     _quantidadeEstoqueController.dispose();
+    for (var item in insumosSelecionados) {
+      item.controller.dispose();
+    }
     super.dispose();
   }
 
@@ -174,10 +184,9 @@ class _ProdutoFormState extends State<ProdutoForm> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
-                  initialValue: item.quantia,
+                  controller: item.controller,
                   decoration: const InputDecoration(labelText: 'Quantia'),
                   keyboardType: TextInputType.number,
-                  onChanged: (value) => item.quantia = value,
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Informe a quantidade';
                     if (double.tryParse(v) == null) return 'Quantidade inválida';
