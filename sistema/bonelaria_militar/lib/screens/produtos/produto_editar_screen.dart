@@ -1,5 +1,5 @@
-import 'package:bonelaria_militar/models/produto.dart';
 import 'package:flutter/material.dart';
+import 'package:bonelaria_militar/models/produto.dart';
 import 'package:bonelaria_militar/services/produto_service.dart';
 import 'package:bonelaria_militar/screens/produtos/components/produto_form.dart';
 
@@ -7,6 +7,37 @@ class ProdutoEdicaoScreen extends StatelessWidget {
   final Produto produto;
 
   const ProdutoEdicaoScreen({super.key, required this.produto});
+
+  Future<void> _handleSubmit({
+    required BuildContext context,
+    required String nome,
+    required String categoria,
+    required String descricao,
+    required int quantidadeEstoque,
+    required List<InsumoSelecionado> insumos,
+  }) async {
+    final erro = await atualizarProduto(
+      produto: produto,
+      nome: nome,
+      categoria: categoria,
+      descricao: descricao,
+      quantidadeEstoque: quantidadeEstoque,
+      insumos: insumos,
+    );
+
+    if (context.mounted) {
+      if (erro == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Produto atualizado com sucesso')),
+        );
+        Navigator.of(context).pop();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(erro)),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +48,14 @@ class ProdutoEdicaoScreen extends StatelessWidget {
         child: ProdutoForm(
           produto: produto,
           onSubmit: ({
-            required String nome,
-            required String categoria,
-            required String descricao,
-            required int quantidadeEstoque,
-            required List<InsumoSelecionado> insumos,
+            required nome,
+            required categoria,
+            required descricao,
+            required quantidadeEstoque,
+            required insumos,
           }) async {
-            await atualizarProduto(
+            await _handleSubmit(
               context: context,
-              produto: produto,
               nome: nome,
               categoria: categoria,
               descricao: descricao,

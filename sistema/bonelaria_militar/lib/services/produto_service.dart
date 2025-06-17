@@ -1,10 +1,8 @@
 import 'package:bonelaria_militar/supabase/supabase_client.dart';
-import 'package:flutter/material.dart';
 import '../../models/produto.dart';
 import '../screens/produtos/components/produto_form.dart';
 
 Future<String?> deletarProduto(int idProduto) async {
-  // Verifica se o produto está em algum pedido
   final pedidos = await SupabaseConfig.client
       .from('produto_pedido')
       .select('id_produto_pedido')
@@ -26,14 +24,13 @@ Future<String?> deletarProduto(int idProduto) async {
         .delete()
         .eq('id_produto', idProduto);
 
-    return null; // null = sucesso
+    return null; // sucesso
   } catch (e) {
     return 'Erro ao excluir produto: $e';
   }
 }
 
-Future<void> salvarProduto({
-  required BuildContext context,
+Future<String?> salvarProduto({
   required String nome,
   required String categoria,
   required String descricao,
@@ -67,23 +64,13 @@ Future<void> salvarProduto({
       await SupabaseConfig.client.from('produto_insumo').insert(dadosInsumos);
     }
 
-    if (!context.mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Produto salvo com sucesso')),
-    );
-
-    Navigator.of(context).pop();
+    return null; // sucesso
   } catch (e) {
-    debugPrint('Erro ao salvar produto: $e');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Erro ao salvar produto: $e')),
-    );
+    return 'Erro ao salvar produto: $e';
   }
 }
 
-Future<void> atualizarProduto({
-  required BuildContext context,
+Future<String?> atualizarProduto({
   required Produto produto,
   required String nome,
   required String categoria,
@@ -120,17 +107,8 @@ Future<void> atualizarProduto({
       await SupabaseConfig.client.from('produto_insumo').insert(dadosInsumos);
     }
 
-    if (!context.mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Produto atualizado com sucesso')),
-    );
-
-    Navigator.of(context).pop();
+    return null; // sucesso
   } catch (e) {
-    debugPrint('Erro ao atualizar produto: $e');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Erro ao atualizar produto: $e')),
-    );
+    return 'Erro ao atualizar produto: $e';
   }
 }
