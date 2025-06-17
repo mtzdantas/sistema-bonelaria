@@ -1,0 +1,92 @@
+name: CI with Flutter and SonarQube
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Analyze Code
+        run: flutter analyze
+
+      - name: Run Tests with Coverage
+        run: flutter test --coverage
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install lcov_cobertura
+        run: pip install lcov_cobertura
+
+      - name: Convert coverage to cobertura XML
+        run: |
+          cd coverage
+          lcov_cobertura lcov.info
+          cd ..
+
+      - name: Install SonarQube CLI (sonar-scanner)
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+          mv sonar-scanner-5.0.1.3006-linux sonar-scanner
+          echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
+
+      - name: Run SonarQube Scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=SisBonelaria \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://labens.dct.ufrn.br/sonarqube \
+            -Dsonar.token=$SONAR_TOKEN
+
+  autotag:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Extrair versão do pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d ' ' -f2 | cut -d '+' -f1)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Criar tag se ainda não existir
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          TAG="v$VERSION"
+
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "⚠️ Tag $TAG já existe. Nenhuma ação será tomada."
+          else
+            git config user.name "github-actions"
+            git config user.email "github-actions@users.noreply.github.com"
+            git tag "$TAG"
+            git push origin "$TAG"
+            echo "✅ Tag $TAG criada e enviada com sucesso."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#para mudar a tag so ir no pubspec.yaml e mudar a versao antes de fazer o push ou commit ou pull request

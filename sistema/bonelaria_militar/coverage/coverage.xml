@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage
+  SYSTEM 'http://cobertura.sourceforge.net/xml/coverage-04.dtd'>
+<coverage branch-rate="0.0" branches-covered="0" branches-valid="0" complexity="0" line-rate="0.9154929577464789" lines-covered="65" lines-valid="71" timestamp="1750180624" version="2.0.3">
+	<sources>
+		<source>.</source>
+	</sources>
+	<packages>
+		<package line-rate="0.9154929577464789" branch-rate="0.0" name="lib.models" complexity="0">
+			<classes>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\endereco.dart" line-rate="1.0" name="lib.models.endereco.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="2" number="8"/>
+						<line branch="false" hits="2" number="16"/>
+						<line branch="false" hits="2" number="17"/>
+						<line branch="false" hits="2" number="18"/>
+						<line branch="false" hits="2" number="19"/>
+						<line branch="false" hits="2" number="20"/>
+						<line branch="false" hits="2" number="21"/>
+						<line branch="false" hits="2" number="22"/>
+					</lines>
+				</class>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\funcionario.dart" line-rate="1.0" name="lib.models.funcionario.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="1" number="15"/>
+						<line branch="false" hits="1" number="28"/>
+						<line branch="false" hits="1" number="29"/>
+						<line branch="false" hits="1" number="30"/>
+						<line branch="false" hits="1" number="31"/>
+						<line branch="false" hits="1" number="32"/>
+						<line branch="false" hits="1" number="33"/>
+						<line branch="false" hits="1" number="34"/>
+						<line branch="false" hits="1" number="35"/>
+						<line branch="false" hits="2" number="36"/>
+						<line branch="false" hits="2" number="37"/>
+						<line branch="false" hits="1" number="38"/>
+						<line branch="false" hits="1" number="39"/>
+						<line branch="false" hits="2" number="40"/>
+					</lines>
+				</class>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\insumo.dart" line-rate="1.0" name="lib.models.insumo.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="2" number="7"/>
+						<line branch="false" hits="2" number="14"/>
+						<line branch="false" hits="2" number="15"/>
+						<line branch="false" hits="2" number="16"/>
+						<line branch="false" hits="2" number="17"/>
+						<line branch="false" hits="2" number="18"/>
+						<line branch="false" hits="2" number="19"/>
+						<line branch="false" hits="1" number="23"/>
+						<line branch="false" hits="1" number="24"/>
+						<line branch="false" hits="1" number="25"/>
+						<line branch="false" hits="1" number="26"/>
+						<line branch="false" hits="1" number="27"/>
+						<line branch="false" hits="1" number="28"/>
+					</lines>
+				</class>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\pedidos.dart" line-rate="1.0" name="lib.models.pedidos.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="1" number="7"/>
+						<line branch="false" hits="1" number="14"/>
+						<line branch="false" hits="1" number="15"/>
+						<line branch="false" hits="1" number="16"/>
+						<line branch="false" hits="2" number="17"/>
+						<line branch="false" hits="1" number="18"/>
+						<line branch="false" hits="2" number="19"/>
+					</lines>
+				</class>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\produto_insumo.dart" line-rate="0.6" name="lib.models.produto_insumo.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="1" number="12"/>
+						<line branch="false" hits="1" number="21"/>
+						<line branch="false" hits="1" number="22"/>
+						<line branch="false" hits="1" number="23"/>
+						<line branch="false" hits="1" number="24"/>
+						<line branch="false" hits="1" number="25"/>
+						<line branch="false" hits="1" number="26"/>
+						<line branch="false" hits="3" number="27"/>
+						<line branch="false" hits="3" number="28"/>
+						<line branch="false" hits="0" number="32"/>
+						<line branch="false" hits="0" number="33"/>
+						<line branch="false" hits="0" number="34"/>
+						<line branch="false" hits="0" number="35"/>
+						<line branch="false" hits="0" number="36"/>
+						<line branch="false" hits="0" number="37"/>
+					</lines>
+				</class>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\produto.dart" line-rate="1.0" name="lib.models.produto.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="2" number="8"/>
+						<line branch="false" hits="2" number="16"/>
+						<line branch="false" hits="2" number="17"/>
+						<line branch="false" hits="2" number="18"/>
+						<line branch="false" hits="2" number="19"/>
+						<line branch="false" hits="2" number="20"/>
+						<line branch="false" hits="2" number="21"/>
+						<line branch="false" hits="2" number="22"/>
+					</lines>
+				</class>
+				<class branch-rate="0.0" complexity="0" filename="lib\models\produto_pedido.dart" line-rate="1.0" name="lib.models.produto_pedido.dart">
+					<methods/>
+					<lines>
+						<line branch="false" hits="1" number="6"/>
+						<line branch="false" hits="1" number="12"/>
+						<line branch="false" hits="1" number="13"/>
+						<line branch="false" hits="2" number="14"/>
+						<line branch="false" hits="1" number="15"/>
+						<line branch="false" hits="2" number="16"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>
