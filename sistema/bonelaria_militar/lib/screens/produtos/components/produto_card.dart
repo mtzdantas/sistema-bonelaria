@@ -7,11 +7,14 @@ import 'package:flutter/material.dart';
 class ProdutoCard extends StatelessWidget {
   final ProdutoComInsumos item;
   final VoidCallback onProdutoAlterado;
+  final VoidCallback? onEditar; // parâmetro usado para testes
+
 
   const ProdutoCard({
     super.key,
     required this.item,
     required this.onProdutoAlterado,
+    this.onEditar,  // parâmetro opcional
   });
 
   @override
@@ -58,7 +61,7 @@ class ProdutoCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton.icon(
-                  onPressed: () async {
+                  onPressed: onEditar ?? () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
