@@ -106,7 +106,7 @@ class CadastroPedidoPageState extends State<CadastroPedidoPage> {
           .insert({
             'id_costureira': _selectedCostureira,
             'data': _dataPedido.toIso8601String().split('T').first,
-            'status_pedido': 'Pendente',
+            'status_pedido': 'Aberto',
           })
           .select('id_pedido')
           .single();
