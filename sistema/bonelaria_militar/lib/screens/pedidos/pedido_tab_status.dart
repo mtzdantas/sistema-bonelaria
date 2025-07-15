@@ -3,15 +3,18 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:bonelaria_militar/services/pedido_service.dart';
 import 'package:bonelaria_militar/models/pedidos.dart';
 import 'package:bonelaria_militar/screens/pedidos/pedido_detalhes_screen.dart';
+import 'package:bonelaria_militar/screens/pedidos/pedido_editar_screen.dart';
 
 class PedidosTab extends StatefulWidget {
   final List<Pedido> pedidos;
   final String statusDesejado;
+  final VoidCallback onPedidoAlterado;
 
   const PedidosTab({
     super.key,
     required this.pedidos,
     required this.statusDesejado,
+    required this.onPedidoAlterado,
   });
 
   @override
@@ -82,6 +85,7 @@ class _PedidosTabState extends State<PedidosTab> {
         ),
         Expanded(
           child: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 90.0), 
             itemCount: pedidosFiltrados.length,
             itemBuilder: (context, index) {
               final p = pedidosFiltrados[index];
@@ -106,44 +110,65 @@ class _PedidosTabState extends State<PedidosTab> {
                       ),
                     );
                   },
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () async {
-                      final confirma = await showDialog<bool>(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: const Text('Confirmar exclusão'),
-                          content: Text('Deseja realmente excluir o pedido #${p.id}?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, false),
-                              child: const Text('Cancelar'),
+                  trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () async {
+                          final resultado = await Navigator.push<bool>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PedidoEdicaoScreen(pedido: p),
                             ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, true),
-                              child: const Text('Excluir'),
+                          );
+                          
+                          if (resultado == true) {
+                            widget.onPedidoAlterado();
+                          }
+                        },
+                      ),
+
+                        IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () async {
+                          final confirma = await showDialog<bool>(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: const Text('Confirmar exclusão'),
+                              content: Text('Deseja realmente excluir o pedido #${p.id}?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, false),
+                                  child: const Text('Cancelar'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text('Excluir'),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
+                          );
 
-                      if (confirma != true) return;
+                          if (confirma != true) return;
 
-                      final mensagemErro = await _pedidoService.deletarPedido(p.id);
+                          final mensagemErro = await _pedidoService.deletarPedido(p.id);
 
-                      if (!context.mounted) return;
+                          if (!context.mounted) return;
 
-                      if (mensagemErro != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(mensagemErro)),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Pedido excluído com sucesso.')),
-                        );
-                        _removerPedidoDaLista(p.id);
-                      }
-                    },
+                          if (mensagemErro != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(mensagemErro)),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Pedido excluído com sucesso.')),
+                            );
+                            _removerPedidoDaLista(p.id);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               );
