@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-
+import 'package:bonelaria_militar/services/pedido_service.dart';
 import 'package:bonelaria_militar/models/pedidos.dart';
 import 'package:bonelaria_militar/screens/pedidos/pedido_detalhes_screen.dart';
 
@@ -21,12 +21,13 @@ class PedidosTab extends StatefulWidget {
 class _PedidosTabState extends State<PedidosTab> {
   List<Pedido> pedidosFiltrados = [];
   final TextEditingController _searchController = TextEditingController();
+  final PedidoService _pedidoService = PedidoService();
 
   @override
   void initState() {
     super.initState();
-    _filtrarPorStatus();
-    _searchController.addListener(_filtrarPorNome);
+    _filtrarPedidos();
+    _searchController.addListener(_filtrarPedidos);
   }
 
   @override
@@ -35,24 +36,24 @@ class _PedidosTabState extends State<PedidosTab> {
     super.dispose();
   }
 
-  void _filtrarPorStatus() {
-    setState(() {
-      pedidosFiltrados = widget.pedidos
-          .where((p) => p.status.toLowerCase() == widget.statusDesejado.toLowerCase())
-          .toList();
-    });
-  }
-
-  void _filtrarPorNome() {
+  void _filtrarPedidos() {
     final query = _searchController.text.toLowerCase();
     setState(() {
       pedidosFiltrados = widget.pedidos
           .where((p) =>
               p.status.toLowerCase() == widget.statusDesejado.toLowerCase() &&
-              p.costureiraNome.toLowerCase().contains(query))
+              (query.isEmpty || p.costureiraNome.toLowerCase().contains(query)))
           .toList();
     });
   }
+
+  void _removerPedidoDaLista(int idPedido) {
+    setState(() {
+      widget.pedidos.removeWhere((pedido) => pedido.id == idPedido);
+      pedidosFiltrados.removeWhere((pedido) => pedido.id == idPedido);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +106,45 @@ class _PedidosTabState extends State<PedidosTab> {
                       ),
                     );
                   },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () async {
+                      final confirma = await showDialog<bool>(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: const Text('Confirmar exclusão'),
+                          content: Text('Deseja realmente excluir o pedido #${p.id}?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancelar'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: const Text('Excluir'),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      if (confirma != true) return;
+
+                      final mensagemErro = await _pedidoService.deletarPedido(p.id);
+
+                      if (!context.mounted) return;
+
+                      if (mensagemErro != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(mensagemErro)),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Pedido excluído com sucesso.')),
+                        );
+                        _removerPedidoDaLista(p.id);
+                      }
+                    },
+                  ),
                 ),
               );
             },

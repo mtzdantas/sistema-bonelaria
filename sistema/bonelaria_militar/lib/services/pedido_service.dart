@@ -9,7 +9,7 @@ class PedidoService {
     .select('id_pedido, status_pedido, id_costureira, data, id_conta_a_pagar, funcionario(nome)');
 
   return (response as List).map((p) => Pedido.fromMap(p)).toList();
-}
+  }
 
 
   static Future<List<Pedido>> buscarPedidosPorConta(int idContaAPagar) async {
@@ -54,5 +54,34 @@ class PedidoService {
     return (response as List)
         .map((item) => ProdutoPedido.fromMap(item))
         .toList();
+  }
+
+  Future<String?> deletarPedido(int idPedido) async {
+    try {
+      final pedidoResponse = await SupabaseConfig.client
+          .from('pedido')
+          .select('id_conta_a_pagar')
+          .eq('id_pedido', idPedido)
+          .single(); 
+
+      if (pedidoResponse['id_conta_a_pagar'] != null) {
+        return 'Não é possível excluir: este pedido já está associado a uma conta a pagar.';
+      }
+
+      await SupabaseConfig.client
+          .from('produto_pedido')
+          .delete()
+          .eq('id_pedido', idPedido);
+
+      await SupabaseConfig.client
+          .from('pedido')
+          .delete()
+          .eq('id_pedido', idPedido);
+
+      return null; 
+
+    } catch (e) {
+      return 'Erro ao excluir pedido: $e';
+    }
   }
 }
